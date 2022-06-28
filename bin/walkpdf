@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Copyright The IETF Trust 2018, All Rights Reserved
 
@@ -16,7 +16,7 @@ for filename in sys.argv[1:]:
         print('Could not find "%s"' % filename)
     print('File: %s' % filename)
     doc = pyobj(filename)
-    with io.open(filename+'.json', 'bw') as j:
+    with io.open(filename+'.json', 'w') as j:
         json.dump(doc, j, indent=2)
     print('Wrote: %s' % j.name)
     with io.open(filename+'.xml', 'w', encoding='utf-8') as x:

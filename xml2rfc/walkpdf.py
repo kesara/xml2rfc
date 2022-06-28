@@ -9,86 +9,36 @@ import io
 import json
 import lxml
 import os
-import PyPDF2 as pypdf2
+import pdfplumber
 import sys
 
-def walk(obj, seen):
-    dobj = {}                            # Direct objects
-    iobj = []                            # Indirect objects
-    if hasattr(obj, 'keys'):
-        for key in obj.keys():
-            k = key[1:] if key.startswith('/') else key
-            d, i = walk(obj[key], seen)
-            dobj[k] = d
-            iobj += i
-        if hasattr(obj, 'extractText'):
-            dobj['text'] = obj.extractText()
-    elif isinstance(obj, pypdf2.generic.ArrayObject):
-        dobj = []
-        for o in obj:
-            d, i = walk(o, seen)
-            dobj.append(d)
-            iobj += i
-    elif isinstance(obj, pypdf2.generic.BooleanObject):
-        dobj = obj.value
-    elif isinstance(obj, pypdf2.generic.NameObject):
-        dobj = str(obj)
-    elif isinstance(obj, pypdf2.generic.NumberObject):
-        dobj = int(obj)
-    elif isinstance(obj, pypdf2.generic.FloatObject):
-        dobj = float(obj)
-    elif isinstance(obj, pypdf2.generic.IndirectObject):
-        dobj = str(obj)
-        if (obj.idnum, obj.generation) not in seen:
-            seen.add((obj.idnum, obj.generation))
-            d, i = walk(obj.getObject(), seen)
-            if isinstance(d, dict):
-                d['IdNum'] = obj.idnum
-                d['Generation'] = obj.generation
-            else:
-                dobj = d
-            iobj += i
-            iobj.append(d)
-    elif isinstance(obj, pypdf2.generic.TextStringObject):
-        dobj = str(obj)
-    else:
-        raise RuntimeError("Unexpected object type: %s" % type(obj))
-
-    if hasattr(obj, 'idnum'):
-        seen.add((obj.idnum, obj.generation))
-
-    return dobj, iobj
+def get_fonts(page):
+    fonts = []
+    if 'char' in page.objects.keys():
+        for obj in page.chars:
+            # pdfplumber presents font names like `ROTXYT+Noto-Sans-Cherokee`
+            fontname = obj['fontname'].split('+')[1].replace('-', ' ')
+            if fontname not in fonts:
+                fonts.append(fontname)
+    return fonts
 
 def pyobj(filename=None, bytes=None):
-    seen = set()
-    #
     pdffile = io.BytesIO(bytes) if bytes else io.open(filename, 'br')
-    reader = pypdf2.PdfFileReader(pdffile, strict=False)
-    info = reader.getDocumentInfo()
-    doc = {}
-    for key in info.keys():
-        k = key[1:] if key.startswith('/') else key
-        doc[k] = info[key]
-    iobj = []
+    reader = pdfplumber.open(pdffile)
+    doc = reader.metadata
     pages = []
-    for num in range(reader.getNumPages()):
-        page = reader.getPage(num)
-        obj = page.getObject()
-        d, i = walk(obj, seen)
-        #pages[num+1] = d
-        pages.append(d)
-        iobj += i
+    for num in range(len(reader.pages)):
+        page = reader.pages[num]
+        pages.append({
+            'text': page.extract_text(),
+            'FontFamily': get_fonts(page)})
     pdffile.close()
-    #
     doc['Page'] = pages
-    doc['IndirectObject'] = iobj
     return doc
 
 def xmltext(filename=None, obj=None, bytes=None):
     if obj is None:
         obj = pyobj(filename=filename, bytes=bytes)
-#     for i,p in enumerate(obj['Pages']):
-#         obj['Pages'][i] = {'Page': p}
     return dict2xml.dict2xml(obj, wrap="Document")    
 
 def xmldoc(filename, text=None, bytes=None):
