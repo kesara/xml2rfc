@@ -34,6 +34,7 @@ unicode_content_tags = set([
     'street',
     'title',
     'u',
+    't',
 ])
 
 # Attribute values should not contain unicode, with some exceptions
@@ -83,6 +84,9 @@ bare_latin_tags = set([
     'title',
     ])
 
+bare_unicode_tags_with_notice = set([
+    't',
+])
 
 def is_svg(e):
     '''
@@ -93,10 +97,6 @@ def is_svg(e):
         return True
     else:
         return False
-
-def enable_rfc_mode_rfc7997_treatment():
-    bare_unicode_tags.update(['t'])
-    unicode_content_tags.update(['t'])
 
 for t in bare_unicode_tags:
     assert t in unicode_content_tags
