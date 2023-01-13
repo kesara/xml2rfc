@@ -97,15 +97,15 @@ Table of Contents
    11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
      11.1.  Informative References . . . . . . . . . . . . . . . . .  14
      11.2.  Normative References . . . . . . . . . . . . . . . . . .  14
-   Appendix A.  Tests  . . . . . . . . . . . . . . . . . . . . . . .  14
+     11.3.  Informative References (by reference)  . . . . . . . . .  14
+   Appendix A.  Tests  . . . . . . . . . . . . . . . . . . . . . . .  15
      A.1.  A Very Long Title Considerations With Regards to the
             Already Deployed Routing Policy  . . . . . . . . . . . .  15
-       A.1.1.  S/MIME encrypted and signed over a simple message,
-               Injected Headers with hcp_minimal (+ Legacy Display)   15
      A.2.  Markup in heading . . . . . . . . . . . . . . . . . . . .  15
      A.3.  Blockquote  . . . . . . . . . . . . . . . . . . . . . . .  15
      A.4.  Verbatim code blocks  . . . . . . . . . . . . . . . . . .  15
-     A.5.  Reference Tests . . . . . . . . . . . . . . . . . . . . .  15
+     A.5.  Reference Tests . . . . . . . . . . . . . . . . . . . . .  16
+     A.6.  Spanx Tests . . . . . . . . . . . . . . . . . . . . . . .  16
 
 
 
@@ -114,14 +114,13 @@ Gieben                    Expires July 5, 2013                  [Page 2]
 Internet-Draft            Pandoc2rfc Version 2              January 2013
 
 
-     A.6.  Spanx Tests . . . . . . . . . . . . . . . . . . . . . . .  15
-     A.7.  List Tests  . . . . . . . . . . . . . . . . . . . . . . .  15
+     A.7.  List Tests  . . . . . . . . . . . . . . . . . . . . . . .  16
      A.8.  Table Tests . . . . . . . . . . . . . . . . . . . . . . .  19
-     A.9.  Numbered examples . . . . . . . . . . . . . . . . . . . .  20
-     A.10. Figure tests  . . . . . . . . . . . . . . . . . . . . . .  20
+     A.9.  Numbered examples . . . . . . . . . . . . . . . . . . . .  21
+     A.10. Figure tests  . . . . . . . . . . . . . . . . . . . . . .  21
      A.11. Verse tests . . . . . . . . . . . . . . . . . . . . . . .  21
    Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  21
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  21
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  22
 
 1.  Introduction
 
@@ -161,6 +160,7 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
    transform that using XSLT.  Pandoc2rfc does just that.  The
    conversions are, in some way amusing, as we start off with (almost)
    plain text, use elaborate XML and end up with plain text again.
+
 
 
 
@@ -773,11 +773,11 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
               RFC 4641, September 2006,
               <http://www.rfc-editor.org/rfc/rfc4641.txt>.
 
-Appendix A.  Tests
+11.3.  Informative References (by reference)
 
-   This appendix consists out of a few tests that should all render to
-   proper xml2rfc XML.
-
+   [I-D.ietf-6lo-ap-nd]
+              Thubert, P., Sarikaya, B., Sethi, M., and R. Struik,
+              "Address-Protected Neighbor Discovery for Low-Power and
 
 
 
@@ -786,15 +786,43 @@ Gieben                    Expires July 5, 2013                 [Page 14]
 Internet-Draft            Pandoc2rfc Version 2              January 2013
 
 
+              Lossy Networks", Work in Progress, Internet-Draft, draft-
+              ietf-6lo-ap-nd-23, April 30, 2020,
+              <https://www.ietf.org/archive/id/draft-ietf-6lo-ap-nd-
+              23.txt>.
+
+   [IEEE.802-1Y.1990]
+              Institute of Electrical and Electronics Engineers, "Source
+              Routing Tutorial for End System Operation", IEEE Standard
+              802.1Y, IEEE 802.1y-1990, IEEE ieee-802-1y, September
+              1990.
+
+   [ISO.8327.1990]
+              International Organization for Standardization,
+              "Information processing systems - Open Systems
+              Interconnection - Basic connection oriented session
+              protocol specification", ISO Standard 8327, April 1990.
+
+   [RFC4941]  Narten, T., Draves, R., and S. Krishnan, "Privacy
+              Extensions for Stateless Address Autoconfiguration in
+              IPv6", RFC 4941, DOI 10.17487/RFC4941, September 2007,
+              <https://www.rfc-editor.org/info/rfc4941>.
+
+   [W3C.CR-accelerometer-20191212]
+              Kostiainen, A., Ed., "Accelerometer", W3C CR CR-
+              accelerometer-20191212, W3C CR-accelerometer-20191212,
+              December 12, 2019,
+              <https://www.w3.org/TR/2019/CR-accelerometer-20191212/>.
+
+Appendix A.  Tests
+
+   This appendix consists out of a few tests that should all render to
+   proper xml2rfc XML.
+
 A.1.  A Very Long Title Considerations With Regards to the Already
       Deployed Routing Policy
 
    Test a very long title.
-
-A.1.1.  S/MIME encrypted and signed over a simple message, Injected
-        Headers with hcp_minimal (+ Legacy Display)
-
-   Test long title edge case
 
 A.2.  Markup in heading
 
@@ -805,6 +833,14 @@ A.3.  Blockquote
       This is a blockquote, how does it look?
 
 A.4.  Verbatim code blocks
+
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 15]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
+
 
    A verbatim code block
    jkasjksajassjasjsajsajkas
@@ -835,13 +871,6 @@ A.7.  List Tests
 
        *  item 2
 
-
-
-Gieben                    Expires July 5, 2013                 [Page 15]
-
-Internet-Draft            Pandoc2rfc Version 2              January 2013
-
-
    And the other around.
 
    *  First we do
@@ -861,6 +890,13 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
       Multiple paragraphs in such a list.
 
    lists in description lists.
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 16]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
+
 
    Item to explain:  It works because of
 
@@ -890,14 +926,6 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
 
        Item to explain:  Another explanation ...
 
-
-
-
-Gieben                    Expires July 5, 2013                 [Page 16]
-
-Internet-Draft            Pandoc2rfc Version 2              January 2013
-
-
    2.  Go'bye
 
    Multiple paragraphs in a list.
@@ -917,6 +945,14 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
    4.  Final item.
 
    xml2rfc does not allow this, so the second paragraph is faked with a
+
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 17]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
+
 
    <vspace blankLines='1'>
 
@@ -944,16 +980,6 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
 
    Some surrounding text, to make it look better.
 
-
-
-
-
-
-Gieben                    Expires July 5, 2013                 [Page 17]
-
-Internet-Draft            Pandoc2rfc Version 2              January 2013
-
-
       First item.  Use lot of text to get a real paragraphs sense.
       First item.  Use lot of text to get a real paragraphs sense.
       First item.  Use lot of text to get a real paragraphs sense.
@@ -976,6 +1002,12 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
    A.  First item
 
    B.  Second item
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 18]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
 
 
    And artwork in a description list.
@@ -1002,14 +1034,6 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
 
        A paragraph that comes first
 
-
-
-
-Gieben                    Expires July 5, 2013                 [Page 18]
-
-Internet-Draft            Pandoc2rfc Version 2              January 2013
-
-
        a.  But what do you know
 
        b.  This is another list
@@ -1028,6 +1052,19 @@ A.8.  Table Tests
 
                          Table 1: Demonstration of
                             simple table syntax.
+
+
+
+
+
+
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 19]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
+
 
       +==========+=========+=========+==============================+
       | Centered | Default |   Right | Left Aligned                 |
@@ -1056,16 +1093,6 @@ A.8.  Table Tests
 
    Grid tables without a caption
 
-
-
-
-
-
-Gieben                    Expires July 5, 2013                 [Page 19]
-
-Internet-Draft            Pandoc2rfc Version 2              January 2013
-
-
                   +=========+=======+==================+
                   | Fruit   | Price | Advantages       |
                   +=========+=======+==================+
@@ -1086,6 +1113,14 @@ Internet-Draft            Pandoc2rfc Version 2              January 2013
 
    We should also be able to refer to the table numbers directly, to say
    things like 'Look at Tables 1, 2 and 3.'
+
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 20]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
+
 
 A.9.  Numbered examples
 
@@ -1115,13 +1150,6 @@ A.10.  Figure tests
 
    Test the use of @title:
 
-
-
-Gieben                    Expires July 5, 2013                 [Page 20]
-
-Internet-Draft            Pandoc2rfc Version 2              January 2013
-
-
    This is a figure with a title
    This is a figure with a title
    @title: and here it is: a title, don't mess it up *
@@ -1139,6 +1167,16 @@ Index
          list
             Uppercase Letters  Appendix A.7, Paragraph 28
             default markers  Appendix A.7, Paragraph 20
+
+
+
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 21]
+
+Internet-Draft            Pandoc2rfc Version 2              January 2013
+
 
       T
 
@@ -1173,4 +1211,22 @@ Author's Address
 
 
 
-Gieben                    Expires July 5, 2013                 [Page 21]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gieben                    Expires July 5, 2013                 [Page 22]

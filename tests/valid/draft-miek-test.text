@@ -89,11 +89,10 @@ Table of Contents
    11. References
      11.1.  Informative References
      11.2.  Normative References
+     11.3.  Informative References (by reference)
    Appendix A.  Tests
      A.1.  A Very Long Title Considerations With Regards to the
             Already Deployed Routing Policy
-       A.1.1.  S/MIME encrypted and signed over a simple message,
-               Injected Headers with hcp_minimal (+ Legacy Display)
      A.2.  Markup in heading
      A.3.  Blockquote
      A.4.  Verbatim code blocks
@@ -652,6 +651,39 @@ Table of Contents
               RFC 4641, September 2006,
               <http://www.rfc-editor.org/rfc/rfc4641.txt>.
 
+11.3.  Informative References (by reference)
+
+   [I-D.ietf-6lo-ap-nd]
+              Thubert, P., Sarikaya, B., Sethi, M., and R. Struik,
+              "Address-Protected Neighbor Discovery for Low-Power and
+              Lossy Networks", Work in Progress, Internet-Draft, draft-
+              ietf-6lo-ap-nd-23, April 30, 2020,
+              <https://www.ietf.org/archive/id/draft-ietf-6lo-ap-nd-
+              23.txt>.
+
+   [IEEE.802-1Y.1990]
+              Institute of Electrical and Electronics Engineers, "Source
+              Routing Tutorial for End System Operation", IEEE Standard
+              802.1Y, IEEE 802.1y-1990, IEEE ieee-802-1y, September
+              1990.
+
+   [ISO.8327.1990]
+              International Organization for Standardization,
+              "Information processing systems - Open Systems
+              Interconnection - Basic connection oriented session
+              protocol specification", ISO Standard 8327, April 1990.
+
+   [RFC4941]  Narten, T., Draves, R., and S. Krishnan, "Privacy
+              Extensions for Stateless Address Autoconfiguration in
+              IPv6", RFC 4941, DOI 10.17487/RFC4941, September 2007,
+              <https://www.rfc-editor.org/info/rfc4941>.
+
+   [W3C.CR-accelerometer-20191212]
+              Kostiainen, A., Ed., "Accelerometer", W3C CR CR-
+              accelerometer-20191212, W3C CR-accelerometer-20191212,
+              December 12, 2019,
+              <https://www.w3.org/TR/2019/CR-accelerometer-20191212/>.
+
 Appendix A.  Tests
 
    This appendix consists out of a few tests that should all render to
@@ -661,11 +693,6 @@ A.1.  A Very Long Title Considerations With Regards to the Already
       Deployed Routing Policy
 
    Test a very long title.
-
-A.1.1.  S/MIME encrypted and signed over a simple message, Injected
-        Headers with hcp_minimal (+ Legacy Display)
-
-   Test long title edge case
 
 A.2.  Markup in heading
 

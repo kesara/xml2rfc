@@ -6,7 +6,7 @@
   <!ENTITY wj     "&#8288;">
 ]>
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude" ipr="trust200902" category="info" docName="draft-gieben-writing-rfcs-pandoc-02" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" symRefs="true" sortRefs="true" version="3">
-  <!-- xml2rfc v2v3 conversion 3.12.10 -->
+  <!-- xml2rfc v2v3 conversion 3.8.0 -->
   <!--generate a table of contents -->
    <!--use anchors instead of numbers for references -->
    <!--alphabetize the references -->
@@ -870,6 +870,48 @@ draft-gieben-writing-rfcs-pandoc-00.txt -> draft.txt
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4641.xml"/>
       </references>
+      <references>
+        <name>Informative References (by reference)</name>
+        <!-- bibxml reference -->
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4941.xml"/>
+        <!-- bibxml-misc reference -->
+        <reference anchor="ISO.8327.1990" xml:base="https://bib.ietf.org/public/rfc/bibxml-misc/reference.ISO.8327.1990.xml">
+          <front>
+            <title>Information processing systems - Open Systems Interconnection - Basic connection oriented session protocol specification</title>
+            <author>
+              <organization>International Organization for Standardization</organization>
+            </author>
+            <date month="April" year="1990"/>
+          </front>
+          <seriesInfo name="ISO" value="Standard 8327"/>
+        </reference>
+        <!-- bibxml-ids reference -->
+        <xi:include href="https://datatracker.ietf.org/doc/bibxml3/draft-ietf-6lo-ap-nd.xml"/>
+        <!-- bibxml-w3c reference -->
+        <reference anchor="W3C.CR-accelerometer-20191212" target="https://www.w3.org/TR/2019/CR-accelerometer-20191212/" xml:base="https://bib.ietf.org/public/rfc/bibxml-misc/reference.W3C.CR-accelerometer-20191212.xml">
+          <front>
+            <title>Accelerometer</title>
+            <author fullname="Anssi Kostiainen" role="editor"/>
+            <date day="12" month="December" year="2019"/>
+          </front>
+          <seriesInfo name="W3C CR" value="CR-accelerometer-20191212"/>
+          <seriesInfo name="W3C" value="CR-accelerometer-20191212"/>
+          <format target="https://www.w3.org/TR/2019/CR-accelerometer-20191212/" type="TXT"/>
+        </reference>
+        <!-- bibxml-ieee reference -->
+        <reference anchor="IEEE.802-1Y.1990" xml:base="https://bib.ietf.org/public/rfc/bibxml-misc/reference.IEEE.802-1Y.1990.xml">
+          <front>
+            <title>Source Routing Tutorial for End System Operation</title>
+            <author>
+              <organization>Institute of Electrical and Electronics Engineers</organization>
+            </author>
+            <date month="September" year="1990"/>
+          </front>
+          <seriesInfo name="IEEE" value="Standard 802.1Y"/>
+          <seriesInfo name="IEEE" value="802.1y-1990"/>
+          <seriesInfo name="IEEE" value="ieee-802-1y"/>
+        </reference>
+      </references>
     </references>
     <!--This document was prepared using Pandoc2rfc https://github.com/miekg/pandoc2rfc -->
       <section anchor="tests" toc="default" numbered="true">
@@ -883,10 +925,6 @@ draft-gieben-writing-rfcs-pandoc-00.txt -> draft.txt
         <t>
                Test a very long title.  
         </t>
-        <section toc="default" numbered="true">
-          <name>S/MIME encrypted and signed over a simple message, Injected Headers with hcp_minimal (+ Legacy Display)</name>
-          <t>Test long title edge case</t>
-        </section>
       </section>
       <section anchor="markup-in-heading" toc="default" numbered="true">
         <name>Markup in heading</name>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="info" consensus="false" docName="draft-gieben-writing-rfcs-pandoc-02" indexInclude="true" ipr="trust200902" prepTime="2022-02-28T04:13:02" scripts="Common,Latin" sortRefs="true" submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" xml:lang="en">
-  <!-- xml2rfc v2v3 conversion 3.12.3 -->
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" version="3" category="info" consensus="false" docName="draft-gieben-writing-rfcs-pandoc-02" indexInclude="true" ipr="trust200902" prepTime="2023-01-13T04:48:59" scripts="Common,Latin" sortRefs="true" submissionType="IETF" symRefs="true" tocDepth="3" tocInclude="true" xml:lang="en">
+  <!-- xml2rfc v2v3 conversion 3.8.0 -->
   <!--generate a table of contents -->
    <!--use anchors instead of numbers for references -->
    <!--alphabetize the references -->
@@ -217,6 +217,9 @@
               <li pn="section-toc.1-1.11.2.2">
                 <t indent="0" pn="section-toc.1-1.11.2.2.1"><xref derivedContent="11.2" format="counter" sectionFormat="of" target="section-11.2"/>.  <xref derivedContent="" format="title" sectionFormat="of" target="name-normative-references">Normative References</xref></t>
               </li>
+              <li pn="section-toc.1-1.11.2.3">
+                <t indent="0" pn="section-toc.1-1.11.2.3.1"><xref derivedContent="11.3" format="counter" sectionFormat="of" target="section-11.3"/>.  <xref derivedContent="" format="title" sectionFormat="of" target="name-informative-references-by-r">Informative References (by reference)</xref></t>
+              </li>
             </ul>
           </li>
           <li pn="section-toc.1-1.12">
@@ -224,11 +227,6 @@
             <ul bare="true" empty="true" indent="2" spacing="compact" pn="section-toc.1-1.12.2">
               <li pn="section-toc.1-1.12.2.1">
                 <t indent="0" pn="section-toc.1-1.12.2.1.1"><xref derivedContent="A.1" format="counter" sectionFormat="of" target="section-appendix.a.1"/>.  <xref derivedContent="" format="title" sectionFormat="of" target="name-a-very-long-title-considera">A Very Long Title Considerations With Regards to the Already Deployed Routing Policy</xref></t>
-                <ul bare="true" empty="true" indent="2" spacing="compact" pn="section-toc.1-1.12.2.1.2">
-                  <li pn="section-toc.1-1.12.2.1.2.1">
-                    <t indent="0" pn="section-toc.1-1.12.2.1.2.1.1"><xref derivedContent="A.1.1" format="counter" sectionFormat="of" target="section-appendix.a.1.1"/>.  <xref derivedContent="" format="title" sectionFormat="of" target="name-s-mime-encrypted-and-signed">S/MIME encrypted and signed over a simple message, Injected Headers with hcp_minimal (+ Legacy Display)</xref></t>
-                  </li>
-                </ul>
               </li>
               <li pn="section-toc.1-1.12.2.2">
                 <t indent="0" pn="section-toc.1-1.12.2.2.1"><xref derivedContent="A.2" format="counter" sectionFormat="of" target="section-appendix.a.2"/>.  <xref derivedContent="" format="title" sectionFormat="of" target="name-markup-in-heading">Markup in heading</xref></t>
@@ -337,18 +335,18 @@
       </t>
       <figure anchor="fig-attempt-to" align="left" suppress-title="false" pn="figure-1">
         <name slugifiedName="name-attempt-to-justify-pandoc2r">Attempt to justify Pandoc2rfc.</name>
-        <artwork name="" type="" align="left" alt="" pn="section-2-5.1"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-2-5.1">
 +-------------------+   pandoc   +---------+  
-| ALMOST PLAIN TEXT |   ------>  | DOCBOOK |  
+| ALMOST PLAIN TEXT |   ------&gt;  | DOCBOOK |  
 +-------------------+            +---------+  
               |                       |
 non-existent  |                       | xsltproc
   faster way  |                       |
               v                       v
       +------------+    xml2rfc  +---------+ 
-      | PLAIN TEXT |  <--------  | XML2RFC | 
+      | PLAIN TEXT |  &lt;--------  | XML2RFC | 
       +------------+             +---------+ 
-            ]]></artwork>
+            </artwork>
       </figure>
       <t indent="0" pn="section-2-6">
             The XML generated (the output after the
@@ -362,28 +360,28 @@ non-existent  |                       | xsltproc
       </t>
       <figure anchor="fig-a-minimal-" align="left" suppress-title="false" pn="figure-2">
         <name slugifiedName="name-a-minimal-templatexml">A minimal template.xml.</name>
-        <artwork name="" type="" align="left" alt="" pn="section-2-7.1"><![CDATA[
-<?xml version='1.0' ?>
-<!DOCTYPE rfc SYSTEM 'rfc2629.dtd' [
-<!ENTITY pandocMiddle PUBLIC '' 'middle.xml'>
-<!ENTITY pandocBack   PUBLIC '' 'back.xml'>
-]>
+        <artwork name="" type="" align="left" alt="" pn="section-2-7.1">
+&lt;?xml version='1.0' ?&gt;
+&lt;!DOCTYPE rfc SYSTEM 'rfc2629.dtd' [
+&lt;!ENTITY pandocMiddle PUBLIC '' 'middle.xml'&gt;
+&lt;!ENTITY pandocBack   PUBLIC '' 'back.xml'&gt;
+]&gt;
 
-<rfc ipr='trust200902' docName='draft-gieben-pandoc-rfcs-02'>
- <front>
-    <title>Writing I-Ds and RFCs using Pandoc v2</title>
-</front>
+&lt;rfc ipr='trust200902' docName='draft-gieben-pandoc-rfcs-02'&gt;
+ &lt;front&gt;
+    &lt;title&gt;Writing I-Ds and RFCs using Pandoc v2&lt;/title&gt;
+&lt;/front&gt;
 
-<middle>
-    &pandocMiddle;
-</middle>
+&lt;middle&gt;
+    &amp;pandocMiddle;
+&lt;/middle&gt;
 
-<back>
-    &pandocBack;
-</back>
+&lt;back&gt;
+    &amp;pandocBack;
+&lt;/back&gt;
 
-</rfc>
-            ]]></artwork>
+&lt;/rfc&gt;
+            </artwork>
       </figure>
       <t indent="0" pn="section-2-8">
             See the Makefile for an example of this. In this case you need to
@@ -423,9 +421,9 @@ non-existent  |                       | xsltproc
                When using Pandoc2rfc consider adding the following sentence to
                an Acknowledgements section: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-2.1-3"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-2.1-3">
  This document was produced using the Pandoc2rfc tool.
-               ]]></artwork>
+               </artwork>
       </section>
     </section>
     <section anchor="starting-a-new-project" toc="include" numbered="true" removeInRFC="false" pn="section-3">
@@ -587,10 +585,10 @@ non-existent  |                       | xsltproc
         <t indent="0" pn="section-7.2-1">
                Just use the normal sectioning commands available in Pandoc, for instance: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-7.2-2"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-7.2-2">
 # Section1 One
 Bla
-               ]]></artwork>
+               </artwork>
         <t indent="0" pn="section-7.2-3">
                Converts to: <tt>&lt;section title="Section1
                One" anchor="section1-one"&gt;</tt> If you have another section that is also
@@ -610,12 +608,12 @@ Bla
         </t>
         <section anchor="symbol" toc="include" numbered="true" removeInRFC="false" pn="section-7.3.1">
           <name slugifiedName="name-symbol">Symbol</name>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.1-1"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.1-1">
 A symbol list.
 
 * Item one;
 * Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.1-2">
                   Converts to <tt>&lt;list style="symbol"&gt;</tt>: 
           </t>
@@ -630,12 +628,12 @@ A symbol list.
         </section>
         <section anchor="number" toc="include" numbered="true" removeInRFC="false" pn="section-7.3.2">
           <name slugifiedName="name-number">Number</name>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.2-1"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.2-1">
 A numbered list.
 
 1. Item one;
 1. Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.2-2">
                   Converts to <tt>&lt;list style="numbers"&gt;</tt>: 
           </t>
@@ -652,12 +650,12 @@ A numbered list.
           <t indent="0" pn="section-7.3.3-1">
                   Using the default list markers from Pandoc: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.3-2"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.3-2">
 A list using the default list markers.
 
 #. Item one;
 #. Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.3-3">
                   Converts to <tt>&lt;list style="empty"&gt;</tt>: 
           </t>
@@ -675,10 +673,10 @@ A list using the default list markers.
           <t indent="0" pn="section-7.3.4-1">
                   Use the supported Pandoc syntax: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.4-2"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.4-2">
 ii. Item one;
 ii. Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.4-3">
                   Converts to <tt>&lt;list style="format %i."&gt;</tt>: 
           </t>
@@ -692,10 +690,10 @@ ii. Item two.
           <t indent="0" pn="section-7.3.4-5">
                   If you use uppercase Roman numerals, they convert to a different style: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.4-6"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.4-6">
 II. Item one;
 II. Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.4-7">
                   Yields <tt>&lt;list style="format (%d) "&gt;</tt>: 
           </t>
@@ -712,10 +710,10 @@ II. Item two.
           <t indent="0" pn="section-7.3.5-1">
                   A numbered list.  
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.5-2"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.5-2">
 a.  Item one;
 b.  Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.5-3">
                   Converts to <tt>&lt;list style="letters"&gt;</tt>: 
           </t>
@@ -729,10 +727,10 @@ b.  Item two.
           <t indent="0" pn="section-7.3.5-5">
                   Uppercasing the letters works too (note two spaces after the letter.  
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.5-6"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.5-6">
 A.  Item one;
 B.  Item two.
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.5-7">
                   Becomes: 
           </t>
@@ -749,7 +747,7 @@ B.  Item two.
           <t indent="0" pn="section-7.3.6-1">
                   This is more like a description list, so we need to use: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.3.6-2"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.3.6-2">
 First item that needs clarification:
 
 :   Explanation one
@@ -760,7 +758,7 @@ More stuff, because item is difficult to explain.
 Second item that needs clarification:
 
 :   Explanation two
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.3.6-3">
                   Converts to: <tt>&lt;list style="hanging"&gt;</tt> and <tt>&lt;t hangText="First item that..."&gt;</tt>
           </t>
@@ -774,9 +772,9 @@ Second item that needs clarification:
         <t indent="0" pn="section-7.4-1">
                Indent the paragraph with 4 spaces.  
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-7.4-2"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-7.4-2">
 Like this
-               ]]></artwork>
+               </artwork>
         <t indent="0" pn="section-7.4-3">
                Converts to:
                <tt>&lt;figure&gt;&lt;artwork&gt; ...</tt>
@@ -832,9 +830,9 @@ Like this
         <t indent="0" pn="section-7.5-1">
                Any paragraph like: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-7.5-2"><![CDATA[
-> quoted text
-               ]]></artwork>
+        <artwork name="" type="" align="left" alt="" pn="section-7.5-2">
+&gt; quoted text
+               </artwork>
         <t indent="0" pn="section-7.5-3">
                Converts to: <tt>&lt;t&gt;&lt;list style="empty"&gt; ...</tt>
                paragraph, making it indented.  
@@ -847,9 +845,9 @@ Like this
           <t indent="0" pn="section-7.6.1-1">
                   Any reference like: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.6.1-2"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.6.1-2">
 [Click here](URI)
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.6.1-3">
                   Converts to: <tt>&lt;ulink target="URI"&gt;Click here ...</tt>
           </t>
@@ -859,9 +857,9 @@ Like this
           <t indent="0" pn="section-7.6.2-1">
                   Any reference like: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.6.2-2"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.6.2-2">
 [Click here](#localid)
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.6.2-3">
                   Converts to: <tt>&lt;link target="localid"&gt;Click here ...</tt>
           </t>
@@ -869,15 +867,15 @@ Like this
                   For referring to RFCs (for which you manually need add the reference source in
                   the template, with an external XML entity), you can just use: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.6.2-5"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.6.2-5">
 [](#RFC2119)
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.6.2-6">
                   And it does the right thing. Referencing sections is done with: 
           </t>
-          <artwork name="" type="" align="left" alt="" pn="section-7.6.2-7"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.6.2-7">
 See [](#pandoc-constructs)
-                  ]]></artwork>
+                  </artwork>
           <t indent="0" pn="section-7.6.2-8">
                   The word 'Section' is inserted automatically: ... see
                   <xref target="pandoc-constructs" format="default" sectionFormat="of" derivedContent="Section 7"/>
@@ -914,7 +912,7 @@ See [](#pandoc-constructs)
         </t>
         <figure anchor="fig-a-caption-" align="left" suppress-title="false" pn="figure-3">
           <name slugifiedName="name-a-caption-describing-the-fi">A caption describing the figure describing the table.</name>
-          <artwork name="" type="" align="left" alt="" pn="section-7.8-2.1"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-7.8-2.1">
   Right     Left     Center     Default                                                                  
   -------   ------ ----------   -------                                                                  
        12     12        12        12                                                                   
@@ -922,7 +920,7 @@ See [](#pandoc-constructs)
         1     1         1         1       
 
   Table: A caption describing the table.
-               ]]></artwork>
+               </artwork>
         </figure>
         <t indent="0" pn="section-7.8-3">
                Is translated to <tt>&lt;texttable&gt;</tt>
@@ -976,23 +974,23 @@ See [](#pandoc-constructs)
         <t indent="0" pn="section-7.9-1">
                The footnote syntax of Pandoc is slightly abused to support an index. Footnotes are entered in two steps, you have a marker in the text, and later you give actual footnote text. Like this: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-7.9-2"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-7.9-2">
 [^1]
 
 [^1]: footnote text
-               ]]></artwork>
+               </artwork>
         <t indent="0" pn="section-7.9-3">
                We re-use this syntax for the <tt>&lt;iref&gt;</tt> tag.  The above text translates to: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-7.9-4"><![CDATA[
-<iref item="footnote text"/>
-               ]]></artwork>
+        <artwork name="" type="" align="left" alt="" pn="section-7.9-4">
+&lt;iref item="footnote text"/&gt;
+               </artwork>
         <t indent="0" pn="section-7.9-5">
                Sub items are also supported. Use an exclamation mark (<tt>!</tt>) to separate them: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-7.9-6"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-7.9-6">
 [^1]: item!sub item
-               ]]></artwork>
+               </artwork>
       </section>
     </section>
     <section anchor="usage-guidelines" toc="include" numbered="true" removeInRFC="false" pn="section-8">
@@ -1009,10 +1007,10 @@ See [](#pandoc-constructs)
                amend the <tt>Makefile</tt> and add
                something like this: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-8.1-2"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-8.1-2">
 allsections.pdc: section.pdc.1 section.pdc.2 section.pdc.3
-        cat $@ > allsections.pdc
-               ]]></artwork>
+        cat $@ &gt; allsections.pdc
+               </artwork>
         <t indent="0" pn="section-8.1-3">
                And then process <tt>allsection.pdc</tt> in the normal way.  
         </t>
@@ -1023,15 +1021,15 @@ allsections.pdc: section.pdc.1 section.pdc.2 section.pdc.3
                If you use double quotes in the documents title in the
                <tt>docName</tt> attribute, like: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-8.2-2"><![CDATA[
-<rfc ipr="trust200902" docName="draft-gieben-writing-rfcs-pandoc-02">
-               ]]></artwork>
+        <artwork name="" type="" align="left" alt="" pn="section-8.2-2">
+&lt;rfc ipr="trust200902" docName="draft-gieben-writing-rfcs-pandoc-02"&gt;
+               </artwork>
         <t indent="0" pn="section-8.2-3">
                The Makefile will pick this up automatically and make a symbolic link: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-8.2-4"><![CDATA[
-draft-gieben-writing-rfcs-pandoc-00.txt -> draft.txt
-               ]]></artwork>
+        <artwork name="" type="" align="left" alt="" pn="section-8.2-4">
+draft-gieben-writing-rfcs-pandoc-00.txt -&gt; draft.txt
+               </artwork>
         <t indent="0" pn="section-8.2-5">
                This makes uploading the file to the i-d tracker a bit easier.  
         </t>
@@ -1157,6 +1155,83 @@ draft-gieben-writing-rfcs-pandoc-00.txt -> draft.txt
           <seriesInfo name="RFC" value="4641"/>
         </reference>
       </references>
+      <references pn="section-11.3">
+        <name slugifiedName="name-informative-references-by-r">Informative References (by reference)</name>
+        <!-- bibxml reference -->
+        <!-- bibxml-misc reference -->
+        <!-- bibxml-ids reference -->
+        <!-- bibxml-w3c reference -->
+        <!-- bibxml-ieee reference -->
+        <reference anchor="I-D.ietf-6lo-ap-nd" target="https://www.ietf.org/archive/id/draft-ietf-6lo-ap-nd-23.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-6lo-ap-nd-23.xml" quoteTitle="true" derivedAnchor="I-D.ietf-6lo-ap-nd">
+          <front>
+            <title>Address-Protected Neighbor Discovery for Low-Power and Lossy Networks</title>
+            <author fullname="Pascal Thubert" initials="P." surname="Thubert">
+              <organization showOnFrontPage="true">Cisco Systems, Inc</organization>
+            </author>
+            <author fullname="Behcet Sarikaya" initials="B." surname="Sarikaya"/>
+            <author fullname="Mohit Sethi" initials="M." surname="Sethi">
+              <organization showOnFrontPage="true">Ericsson</organization>
+            </author>
+            <author fullname="Rene Struik" initials="R." surname="Struik">
+              <organization showOnFrontPage="true">Struik Security Consultancy</organization>
+            </author>
+            <date day="30" month="April" year="2020"/>
+            <abstract>
+              <t indent="0">This document updates the IPv6 over Low-Power Wireless Personal Area Network (6LoWPAN) Neighbor Discovery (ND) protocol defined in RFCs 6775 and 8505. The new extension is called Address-Protected Neighbor Discovery (AP-ND), and it protects the owner of an address against address theft and impersonation attacks in a Low-Power and Lossy Network (LLN). Nodes supporting this extension compute a cryptographic identifier (Crypto-ID), and use it with one or more of their Registered Addresses. The Crypto-ID identifies the owner of the Registered Address and can be used to provide proof of ownership of the Registered Addresses. Once an address is registered with the Crypto-ID and a proof of ownership is provided, only the owner of that address can modify the registration information, thereby enforcing Source Address Validation.</t>
+            </abstract>
+          </front>
+          <seriesInfo name="Internet-Draft" value="draft-ietf-6lo-ap-nd-23"/>
+          <format target="https://www.ietf.org/archive/id/draft-ietf-6lo-ap-nd-23.txt" type="TXT"/>
+          <refcontent>Work in Progress</refcontent>
+        </reference>
+        <reference anchor="IEEE.802-1Y.1990" xml:base="https://bib.ietf.org/public/rfc/bibxml-misc/reference.IEEE.802-1Y.1990.xml" quoteTitle="true" derivedAnchor="IEEE.802-1Y.1990">
+          <front>
+            <title>Source Routing Tutorial for End System Operation</title>
+            <author>
+              <organization showOnFrontPage="true">Institute of Electrical and Electronics Engineers</organization>
+            </author>
+            <date month="September" year="1990"/>
+          </front>
+          <seriesInfo name="IEEE" value="Standard 802.1Y"/>
+          <seriesInfo name="IEEE" value="802.1y-1990"/>
+          <seriesInfo name="IEEE" value="ieee-802-1y"/>
+        </reference>
+        <reference anchor="ISO.8327.1990" xml:base="https://bib.ietf.org/public/rfc/bibxml-misc/reference.ISO.8327.1990.xml" quoteTitle="true" derivedAnchor="ISO.8327.1990">
+          <front>
+            <title>Information processing systems - Open Systems Interconnection - Basic connection oriented session protocol specification</title>
+            <author>
+              <organization showOnFrontPage="true">International Organization for Standardization</organization>
+            </author>
+            <date month="April" year="1990"/>
+          </front>
+          <seriesInfo name="ISO" value="Standard 8327"/>
+        </reference>
+        <reference anchor="RFC4941" target="https://www.rfc-editor.org/info/rfc4941" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4941.xml" quoteTitle="true" derivedAnchor="RFC4941">
+          <front>
+            <title>Privacy Extensions for Stateless Address Autoconfiguration in IPv6</title>
+            <author fullname="T. Narten" initials="T." surname="Narten"/>
+            <author fullname="R. Draves" initials="R." surname="Draves"/>
+            <author fullname="S. Krishnan" initials="S." surname="Krishnan"/>
+            <date month="September" year="2007"/>
+            <abstract>
+              <t indent="0">Nodes use IPv6 stateless address autoconfiguration to generate addresses using a combination of locally available information and information advertised by routers.  Addresses are formed by combining network prefixes with an interface identifier.  On an interface that contains an embedded IEEE Identifier, the interface identifier is typically derived from it.  On other interface types, the interface identifier is generated through other means, for example, via random number generation.  This document describes an extension to IPv6 stateless address autoconfiguration for interfaces whose interface identifier is derived from an IEEE identifier.  Use of the extension causes nodes to generate global scope addresses from interface identifiers that change over time, even in cases where the interface contains an embedded IEEE identifier.  Changing the interface identifier (and the global scope addresses generated from it) over time makes it more difficult for eavesdroppers and other information collectors to identify when different addresses used in different transactions actually correspond to the same node. [STANDARDS-TRACK]</t>
+            </abstract>
+          </front>
+          <seriesInfo name="RFC" value="4941"/>
+          <seriesInfo name="DOI" value="10.17487/RFC4941"/>
+          <format target="https://www.rfc-editor.org/info/rfc4941" type="TXT"/>
+        </reference>
+        <reference anchor="W3C.CR-accelerometer-20191212" target="https://www.w3.org/TR/2019/CR-accelerometer-20191212/" xml:base="https://bib.ietf.org/public/rfc/bibxml-misc/reference.W3C.CR-accelerometer-20191212.xml" quoteTitle="true" derivedAnchor="W3C.CR-accelerometer-20191212">
+          <front>
+            <title>Accelerometer</title>
+            <author fullname="Anssi Kostiainen" role="editor"/>
+            <date day="12" month="December" year="2019"/>
+          </front>
+          <seriesInfo name="W3C CR" value="CR-accelerometer-20191212"/>
+          <seriesInfo name="W3C" value="CR-accelerometer-20191212"/>
+          <format target="https://www.w3.org/TR/2019/CR-accelerometer-20191212/" type="TXT"/>
+        </reference>
+      </references>
     </references>
     <!--This document was prepared using Pandoc2rfc https://github.com/miekg/pandoc2rfc -->
       <section anchor="tests" toc="include" numbered="true" removeInRFC="false" pn="section-appendix.a">
@@ -1170,10 +1245,6 @@ draft-gieben-writing-rfcs-pandoc-00.txt -> draft.txt
         <t indent="0" pn="section-appendix.a.1-1">
                Test a very long title.  
         </t>
-        <section toc="include" numbered="true" removeInRFC="false" pn="section-appendix.a.1.1">
-          <name slugifiedName="name-s-mime-encrypted-and-signed">S/MIME encrypted and signed over a simple message, Injected Headers with hcp_minimal (+ Legacy Display)</name>
-          <t indent="0" pn="section-appendix.a.1.1-1">Test long title edge case</t>
-        </section>
       </section>
       <section anchor="markup-in-heading" toc="include" numbered="true" removeInRFC="false" pn="section-appendix.a.2">
         <name slugifiedName="name-markup-in-heading">Markup in heading</name>
@@ -1191,10 +1262,10 @@ draft-gieben-writing-rfcs-pandoc-00.txt -> draft.txt
       </section>
       <section anchor="verbatim-code-blocks" toc="include" numbered="true" removeInRFC="false" pn="section-appendix.a.4">
         <name slugifiedName="name-verbatim-code-blocks">Verbatim code blocks</name>
-        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.4-1"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.4-1">
 A verbatim code block
 jkasjksajassjasjsajsajkas
-               ]]></artwork>
+               </artwork>
       </section>
       <section anchor="reference-tests" toc="include" numbered="true" removeInRFC="false" pn="section-appendix.a.5">
         <name slugifiedName="name-reference-tests">Reference Tests</name>
@@ -1348,9 +1419,9 @@ jkasjksajassjasjsajsajkas
             <t indent="0" pn="section-appendix.a.7-11.3.1">
                      Another item with some artwork, indented by 8 spaces.
             </t>
-            <artwork name="" type="" align="left" alt="" pn="section-appendix.a.7-11.3.2"><![CDATA[
+            <artwork name="" type="" align="left" alt="" pn="section-appendix.a.7-11.3.2">
 Artwork
-                        ]]></artwork>
+                        </artwork>
           </li>
           <li pn="section-appendix.a.7-11.4" derivedCounter="4.">
                      Final item.  
@@ -1359,9 +1430,9 @@ Artwork
         <t indent="0" pn="section-appendix.a.7-12">
                xml2rfc does not allow this, so the second paragraph is faked with a 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.7-13"><![CDATA[
-<vspace blankLines='1'>
-               ]]></artwork>
+        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.7-13">
+&lt;vspace blankLines='1'&gt;
+               </artwork>
         <t indent="0" pn="section-appendix.a.7-14">
                Ordered lists.  
         </t>
@@ -1451,10 +1522,10 @@ Artwork
                      Tell something about it. Tell something about it. Tell something about
 		     it. Tell something about it. Tell something about it. Tell something about it.
             </t>
-            <artwork name="" type="" align="left" alt="" pn="section-appendix.a.7-30.2.2"><![CDATA[
+            <artwork name="" type="" align="left" alt="" pn="section-appendix.a.7-30.2.2">
 miek.nl.    IN  NS  a.miek.nl.                             
-a.miek.nl.  IN  A   192.0.2.1    ; <- this is glue            
-                     ]]></artwork>
+a.miek.nl.  IN  A   192.0.2.1    ; &lt;- this is glue            
+                     </artwork>
             <t indent="0" pn="section-appendix.a.7-30.2.3">
                      Tell some more about it. Tell some more about it. Tell some more about it.  
             </t>
@@ -1598,9 +1669,9 @@ a.miek.nl.  IN  A   192.0.2.1    ; <- this is glue
         <t indent="0" pn="section-appendix.a.8-7">
                This table has no caption, and therefor no reference. But you can refer to some of the other tables, with for instance: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.8-8"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.8-8">
 See [](#tab-here-s-the)
-               ]]></artwork>
+               </artwork>
         <t indent="0" pn="section-appendix.a.8-9">
                Which will become "See <xref target="tab-here-s-the" format="default" sectionFormat="of" derivedContent="Table 2"/>".  
         </t>
@@ -1632,31 +1703,31 @@ See [](#tab-here-s-the)
         <name slugifiedName="name-figure-tests">Figure tests</name>
         <figure anchor="fig-this-is-th" align="left" suppress-title="false" pn="figure-4">
           <name slugifiedName="name-this-is-the-caption-with-te">This is the caption, with text in `typewriter`. Which isnt converted to a &lt;spanx&gt; style, because this is copied as-is.</name>
-          <artwork name="" type="" align="left" alt="" pn="section-appendix.a.10-1.1"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-appendix.a.10-1.1">
 This is a figure
 This is a figure
 This is a figure
 This is a figure
-               ]]></artwork>
+               </artwork>
         </figure>
         <t indent="0" pn="section-appendix.a.10-2">
                And how a figure that is not centered, do to using <tt>figure</tt> and not <tt>Figure</tt>.  
         </t>
         <figure anchor="fig-a-non-cent" align="left" suppress-title="false" pn="figure-5">
           <name slugifiedName="name-a-non-centered-figure">A non centered figure.</name>
-          <artwork name="" type="" align="left" alt="" pn="section-appendix.a.10-3.1"><![CDATA[
+          <artwork name="" type="" align="left" alt="" pn="section-appendix.a.10-3.1">
 This is a figure
 This is a figure
-               ]]></artwork>
+               </artwork>
         </figure>
         <t indent="0" pn="section-appendix.a.10-4">
                Test the use of <tt>@title</tt>: 
         </t>
-        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.10-5"><![CDATA[
+        <artwork name="" type="" align="left" alt="" pn="section-appendix.a.10-5">
 This is a figure with a title
 This is a figure with a title
 @title: and here it is: a title, don't mess it up *
-               ]]></artwork>
+               </artwork>
       </section>
       <section anchor="verse-tests" toc="include" numbered="true" removeInRFC="false" pn="section-appendix.a.11">
         <name slugifiedName="name-verse-tests">Verse tests</name>

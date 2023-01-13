@@ -27,22 +27,22 @@
 <meta content="draft-gieben-writing-rfcs-pandoc-02" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.15.3
-    Python 3.8.13
+    Python 3.10.6
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.1
+    lxml 4.9.2
     MarkupSafe 2.1.1
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.28.1
-    setuptools 63.4.1
+    setuptools 65.6.3
     six 1.16.0
     wcwidth 0.2.5
-    weasyprint 57.1
+    weasyprint 57.2
 -->
 <link href="tests/input/draft-miek-test.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1433,6 +1433,9 @@ li > p:last-of-type:only-child {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
                 <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-normative-references-2" class="internal xref">Normative References</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-informative-references-by-re" class="internal xref">Informative References (by reference)</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
@@ -1440,11 +1443,6 @@ li > p:last-of-type:only-child {
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
                 <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-A.1" class="auto internal xref">A.1</a>.  <a href="#name-a-very-long-title-considerat" class="internal xref">A Very Long Title Considerations With Regards to the Already Deployed Routing Policy</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1.2.1">
-                    <p id="section-toc.1-1.12.2.1.2.1.1"><a href="#appendix-A.1.1" class="auto internal xref">A.1.1</a>.  <a href="#name-s-mime-encrypted-and-signed-" class="internal xref">S/MIME encrypted and signed over a simple message, Injected Headers with hcp_minimal (+ Legacy Display)</a></p>
-</li>
-                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
                 <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-A.2" class="auto internal xref">A.2</a>.  <a href="#name-markup-in-heading-2" class="internal xref">Markup in heading</a></p>
@@ -2451,6 +2449,33 @@ draft-gieben-writing-rfcs-pandoc-00.txt -&gt; draft.txt
 <dd class="break"></dd>
 </dl>
 </section>
+<section id="section-11.3">
+        <h3 id="name-informative-references-by-re">
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-informative-references-by-re" class="section-name selfRef">Informative References (by reference)</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.ietf-6lo-ap-nd">[I-D.ietf-6lo-ap-nd]</dt>
+        <dd>
+<span class="refAuthor">Thubert, P.</span>, <span class="refAuthor">Sarikaya, B.</span>, <span class="refAuthor">Sethi, M.</span>, and <span class="refAuthor">R. Struik</span>, <span class="refTitle">"Address-Protected Neighbor Discovery for Low-Power and Lossy Networks"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-6lo-ap-nd-23</span>, <time datetime="2020-04-30" class="refDate">30 April 2020</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-ietf-6lo-ap-nd-23.txt">https://www.ietf.org/archive/id/draft-ietf-6lo-ap-nd-23.txt</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="IEEE.802-1Y.1990">[IEEE.802-1Y.1990]</dt>
+        <dd>
+<span class="refAuthor">Institute of Electrical and Electronics Engineers</span>, <span class="refTitle">"Source Routing Tutorial for End System Operation"</span>, <span class="seriesInfo">IEEE Standard 802.1Y</span>, <span class="seriesInfo">IEEE 802.1y-1990</span>, <span class="seriesInfo">IEEE ieee-802-1y</span>, <time datetime="1990-09" class="refDate">September 1990</time>. </dd>
+<dd class="break"></dd>
+<dt id="ISO.8327.1990">[ISO.8327.1990]</dt>
+        <dd>
+<span class="refAuthor">International Organization for Standardization</span>, <span class="refTitle">"Information processing systems - Open Systems Interconnection - Basic connection oriented session protocol specification"</span>, <span class="seriesInfo">ISO Standard 8327</span>, <time datetime="1990-04" class="refDate">April 1990</time>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4941">[RFC4941]</dt>
+        <dd>
+<span class="refAuthor">Narten, T.</span>, <span class="refAuthor">Draves, R.</span>, and <span class="refAuthor">S. Krishnan</span>, <span class="refTitle">"Privacy Extensions for Stateless Address Autoconfiguration in IPv6"</span>, <span class="seriesInfo">RFC 4941</span>, <span class="seriesInfo">DOI 10.17487/RFC4941</span>, <time datetime="2007-09" class="refDate">September 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4941">https://www.rfc-editor.org/info/rfc4941</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="W3C.CR-accelerometer-20191212">[W3C.CR-accelerometer-20191212]</dt>
+      <dd>
+<span class="refAuthor">Kostiainen, A., Ed.</span>, <span class="refTitle">"Accelerometer"</span>, <span class="seriesInfo">W3C CR CR-accelerometer-20191212</span>, <span class="seriesInfo">W3C CR-accelerometer-20191212</span>, <time datetime="2019-12-12" class="refDate">12 December 2019</time>, <span>&lt;<a href="https://www.w3.org/TR/2019/CR-accelerometer-20191212/">https://www.w3.org/TR/2019/CR-accelerometer-20191212/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
 </section>
 <div id="tests">
 <section id="appendix-A">
@@ -2467,12 +2492,6 @@ draft-gieben-writing-rfcs-pandoc-00.txt -&gt; draft.txt
         </h3>
 <p id="appendix-A.1-1">
                Test a very long title.<a href="#appendix-A.1-1" class="pilcrow">¶</a></p>
-<section id="appendix-A.1.1">
-          <h4 id="name-s-mime-encrypted-and-signed-">
-<a href="#appendix-A.1.1" class="section-number selfRef">A.1.1. </a><a href="#name-s-mime-encrypted-and-signed-" class="section-name selfRef">S/MIME encrypted and signed over a simple message, Injected Headers with hcp_minimal (+ Legacy Display)</a>
-          </h4>
-<p id="appendix-A.1.1-1">Test long title edge case<a href="#appendix-A.1.1-1" class="pilcrow">¶</a></p>
-</section>
 </section>
 </div>
 <div id="markup-in-heading">
