@@ -1,9 +1,10 @@
-<?xml version='1.0'?>
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE rfc SYSTEM "rfc2629-xhtml.ent">
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 <?rfc-ext include-references-in-index="yes" ?>
 <?rfc-ext paragraph-links='yes'?>
-<rfc sortRefs="true" category="exp" submissionType="independent" ipr="trust200902" docName="sourcecode-00">
-    <?v3xml2rfc silence="Unused reference: There seems to be no reference to .*" ?>
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" sortRefs="true" category="exp" submissionType="independent" ipr="trust200902" docName="sourcecode-00">
+  <?v3xml2rfc silence="Unused reference: There seems to be no reference to .*" ?>
     <?v3xml2rfc silence="The 'docName' attribute of the .rfc/. element should have a revision number" ?>
     <?v3xml2rfc silence='Did not find a recognized country entry' ?>
     <?v3xml2rfc silence="Postal address" ?>
@@ -11,21 +12,21 @@
     <?v3xml2rfc silence="The document date (.*) is more than 3 days away from today's date" ?>
     <?v3xml2rfc silence="Found SVG with width or height specified" ?>
     <front>
-        <title>xml2rfc sourcecode tests</title>
-        <author fullname="Human Person" initials="H" surname="Person" role="editor">
-            <address>
-                <postal>
-                    <postalLine>line 1</postalLine>
-                    <postalLine>line 2</postalLine>
-                    <postalLine>line 3</postalLine>
-                </postal>
-            </address>
-        </author>
-    </front>
-    <middle>
-        <section>
-            <name>Less than 50 lines</name>
-            <sourcecode name="49lines.py">print("01")
+    <title>xml2rfc sourcecode tests</title>
+    <author fullname="Human Person" initials="H" surname="Person" role="editor">
+      <address>
+        <postal>
+          <postalLine>line 1</postalLine>
+          <postalLine>line 2</postalLine>
+          <postalLine>line 3</postalLine>
+        </postal>
+      </address>
+    </author>
+  </front>
+  <middle>
+    <section>
+      <name>Less than 50 lines</name>
+      <sourcecode name="49lines.py">print("01")
 print("02")
 print("03")
 print("04")
@@ -74,8 +75,8 @@ print("46")
 print("47")
 print("48")
 print("49")
-            </sourcecode>
-            <sourcecode name="50lines.py">print("01")
+</sourcecode>
+      <sourcecode name="50lines.py">print("01")
 print("02")
 print("03")
 print("04")
@@ -125,22 +126,22 @@ print("47")
 print("48")
 print("49")
 print("50")
-            </sourcecode>
-        </section>
-    </middle>
-    <back>
-        <references>
-            <name>References</name>
-            <reference anchor="ref0">
-                <front>
-                    <title>Reference</title>
-                    <author fullname="Reference Q. Author"/>
-                </front>
-                <annotation>
+</sourcecode>
+    </section>
+  </middle>
+  <back>
+    <references>
+      <name>References</name>
+      <reference anchor="ref0">
+        <front>
+          <title>Reference</title>
+          <author fullname="Reference Q. Author"/>
+        </front>
+        <annotation>
                     <iref item="annotation"/>
                     This is a reference not in a reference group.
-                </annotation>
-            </reference>
-        </references>
-    </back>
+        </annotation>
+      </reference>
+    </references>
+  </back>
 </rfc>
