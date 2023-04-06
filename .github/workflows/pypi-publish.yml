@@ -88,13 +88,13 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
-        python -m pip install --upgrade pip setuptools wheel twine
-        pip install build
+        python -m pip install --upgrade pip setuptools wheel twine build
         sudo apt update
         sudo apt install -y twine
         
     - name: Build Python package
       run: |
+        source venv/bin/activate
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" xml2rfc/__init__.py
         python -m build --sdist
