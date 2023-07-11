@@ -1160,3 +1160,21 @@ li > p {
 li > p:last-of-type:only-child {
   margin-bottom: 0;
 }
+
+/* artwork tabs */
+div.artworks > div {
+  display: none;
+}
+
+div.artworks > div:first-child {
+  display: block;
+}
+
+div.artworks > div:target {
+  display: block;
+}
+
+div.artwork_links > a {
+  border: 1px solid #ccc;
+  padding: 0.25em;
+}

@@ -796,15 +796,27 @@ class HtmlWriter(BaseV3Writer):
     # 
 
     def render_artset(self, h, x):
-        preflist = ['svg', 'binary-art', 'ascii-art', ]
-        div = add.div(h, x)
-        for t in preflist:
-            for a in x.xpath('./artwork[@type="%s"]' % t):
-                artwork = self.render(div, a)
-                return artwork
-        else:
-            artwork = self.render(div, x[0])
-        return div
+        artset_div = add.div(h, x, classes='artworks-tab')
+        artwork_count = int(x.xpath('count(./child::*)'))
+        if artwork_count > 1:
+            links = build.div('', classes='artwork_links')
+            artworks= build.div('', classes='artworks')
+            for i in range(artwork_count):
+                pid = h.get('id')
+                id = f'{pid}-{i}'
+                label = f'Show {x[i].get("type", "art").upper()}'
+                if i == 0:
+                    label = f'{label} only'
+                link = build.a(label, href=f'#{id}')
+                links.append(link)
+                artwork = build.div('', id=id)
+                self.render(artwork, x[i])
+                artworks.append(artwork)
+
+        artset_div.append(artworks)
+        artset_div.append(links)
+
+        return artset_div
 
     # 9.5.  <artwork>
     # 
