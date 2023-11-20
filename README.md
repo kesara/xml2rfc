@@ -31,7 +31,22 @@ The [IETF] uses a specific format for the standards and other documents it publi
 
 ### Installation
 
-Installation of the python package is done as usual with `pip install xml2rfc`, using appropriate switches.
+#### With pip
+
+NOTE: The first line upgrades pip.
+
+```
+pip install --upgrade pip
+pip install xml2rfc
+```
+
+#### With pipx
+
+To install with [pipx](https://pypa.github.io/pipx/) run:
+
+```
+pipx install xml2rfc
+```
 
 #### Installation of support libraries for the PDF-formatter
 
