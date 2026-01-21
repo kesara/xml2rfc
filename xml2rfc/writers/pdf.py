@@ -96,7 +96,7 @@ class PdfWriter(BaseV3Writer):
         page_css_text = page_css_template.format(**page_info)
         page_css = weasyprint.CSS(string=page_css_text)
 
-        pdf = writer.write_pdf(None, stylesheets=[ css, page_css ], presentational_hints=True, pdf_variant='pdf/a-3b', pdf_identifier='xml2rfc')
+        pdf = writer.write_pdf(None, stylesheets=[ css, page_css ], presentational_hints=True, pdf_variant='pdf/a-3u', pdf_identifier='xml2rfc')
 
         return pdf
 
