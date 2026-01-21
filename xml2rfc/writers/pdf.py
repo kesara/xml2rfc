@@ -98,12 +98,12 @@ class PdfWriter(BaseV3Writer):
         page_css = weasyprint.CSS(string=page_css_text)
 
         # set additional metadata
-        rendering = writer.render()
+        rendering = writer.render(stylesheets=[ css, page_css ], presentational_hints=True, pdf_identifier='xml2rfc')
         now = datetime.now(timezone.utc).isoformat()
         rendering.metadata.created = now
         rendering.metadata.modified = now
 
-        pdf = rendering.write_pdf(None, stylesheets=[ css, page_css ], presentational_hints=True, pdf_variant='pdf/a-3u', pdf_identifier='xml2rfc', custom_metadata=True)
+        pdf = rendering.write_pdf(None, pdf_variant='pdf/a-3u')
 
         return pdf
 
