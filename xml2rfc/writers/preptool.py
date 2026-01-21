@@ -6,7 +6,6 @@ import copy
 import datetime
 import os
 import re
-import six
 import sys
 import traceback as tb
 import unicodedata
@@ -21,12 +20,8 @@ try:
 except ImportError:
     pass
 
-if six.PY2:
-    from urlparse import urlsplit, urlunsplit, urljoin, urlparse
-    from urllib import urlopen
-elif six.PY3:
-    from urllib.parse import urlsplit, urlunsplit, urljoin, urlparse
-    from urllib.request import urlopen
+from urllib.parse import urlsplit, urlunsplit, urljoin, urlparse
+from urllib.request import urlopen
 
 from lxml import etree
 
@@ -38,6 +33,7 @@ from xml2rfc.boilerplate_tlp import boilerplate_tlp
 from xml2rfc.scripts import get_scripts
 from xml2rfc.uniscripts import is_script
 from xml2rfc.util.date import get_expiry_date, format_date, normalize_month
+from xml2rfc.util.file import can_access, FileAccessError
 from xml2rfc.util.name import full_author_name_expansion
 from xml2rfc.util.num import ol_style_formatter
 from xml2rfc.util.unicode import (
@@ -263,6 +259,7 @@ class PrepToolWriter(BaseV3Writer):
         './/boilerplate;insert_copyright_notice()', # 5.4.2.3.  "Copyright Notice" Insertion
         './/boilerplate//section',          # 5.2.7.  Section "toc" attribute
         './/reference;insert_target()',     # 5.4.3.  <reference> "target" Insertion
+        './/referencegroup;insert_target()',        # <referencegroup> "target" Insertion
         './/reference;insert_work_in_progress()',
         './/reference;sort_series_info()',  #         <reference> sort <seriesInfo>
         './/name;insert_slugified_name()',  # 5.4.4.  <name> Slugification
@@ -439,9 +436,9 @@ class PrepToolWriter(BaseV3Writer):
                     if (c.tag, a) in latinscript_attributes:
                         if not is_script(v, 'Latin'):
                             self.err(c, 'Found non-Latin-script content in <%s> attribute value %s="%s"' % (c.tag, a, v))
-                    else:
+                    if self.options.warn_bare_unicode:
                         if not isascii(v):
-                            self.err(c, 'Found non-ASCII content in <%s> attribute value %s="%s"' % (c.tag, a, v))
+                            self.warn(c, f'Found non-ASCII content in {c.tag} attribute value {a}="{v}" that should be inspected to ensure it is intentional.')
                 if not (c.tag, a) in space_attributes:
                     vv = v.strip()
                     if vv != v:
@@ -649,7 +646,7 @@ class PrepToolWriter(BaseV3Writer):
                 year = str(today.year)
             if not month:
                 if year != str(today.year):
-                    self.die(e, "Expected <date> to have the current year when month is missing, but found '%s'" % (d.get('year')))
+                    self.warn(e, "Expected <date> to have the current year when month is missing, but found '%s'" % (d.get('year')))
                 month = today.strftime('%m')
                 day = today.strftime('%d')
             datestr = "%s-%s-%s" %(year, month, day or '01')
@@ -1216,6 +1213,24 @@ class PrepToolWriter(BaseV3Writer):
             front.insert(pos, s)
             pos += 1
 
+    def referencegroup_insert_target(self, e, p):
+        target_pattern = {
+            "BCP": os.path.join(self.options.info_base_url, 'bcp{value}'),
+            "STD": os.path.join(self.options.info_base_url, 'std{value}'),
+            "FYI": os.path.join(self.options.info_base_url, 'fyi{value}'),
+        }
+
+        if not e.get('target'):
+            for c in e.xpath('.//seriesInfo'):
+                series_name = c.get('name')
+                if series_name in target_pattern.keys():
+                    series_value=c.get('value')
+                    if series_value:
+                        e.set('target', target_pattern[series_name].format(value=series_value))
+                        break
+                    else:
+                        self.err(c, 'Expected a value= attribute value for <seriesInfo name="%s">, but found none' % (series_name, ))
+
     # 
     # 5.4.4.  <name> Slugification
     # 
@@ -1700,20 +1715,15 @@ class PrepToolWriter(BaseV3Writer):
         return (scheme, netloc, path, query, fragment)
 
     def check_src_file_path(self, e, scheme, netloc, path, query, fragment):
-        shellmeta = re.compile("[><*[`$|;&(#]")
+        try:
+            can_access(self.options, self.xmlrfc.source, path)
+        except FileAccessError as err:
+            self.err(e, err)
+            return None
         #
         dir = os.path.abspath(os.path.dirname(self.xmlrfc.source))
         path = os.path.abspath(os.path.join(dir, path))
-        if not path.startswith(dir):
-            self.err(e, "Expected an <%s> src= file located beside or below the .xml source (in %s), but found a reference to %s" % (e.tag, dir, path))
-            return None
         src = urlunsplit((scheme, '', path, '', ''))
-        if shellmeta.search(src):
-            self.err(e, "Found disallowed shell meta-characters in the src='file:...' attribute")
-            return None
-        if not os.path.exists(path):
-            self.err(e, "Expected an <%s> src= file at '%s', but no such file exists" % (e.tag, path, ))
-            return None
         #
         e.set('src', src)
         return src
@@ -1832,10 +1842,7 @@ class PrepToolWriter(BaseV3Writer):
                     if scheme in ['http', 'https']:
                         with closing(urlopen(src)) as f:
                             data = f.read()
-                            if six.PY2:
-                                mediatype = f.info().gettype()
-                            else:
-                                mediatype = f.info().get_content_type()
+                            mediatype = f.info().get_content_type()
                         src = build_dataurl(mediatype, data)
                         e.set('src', src)
                     elif scheme == 'file':
@@ -1930,7 +1937,8 @@ class PrepToolWriter(BaseV3Writer):
                 e.text = data
                 del e.attrib['src']
 
-        self.normalize_whitespace(e)
+        if e.text:
+            self.normalize_whitespace(e)
         
     #
     # 5.4.2.4  "Table of Contents" Insertion
@@ -2283,6 +2291,9 @@ class PrepToolWriter(BaseV3Writer):
         for e in self.root.find('./front'):
             if e.tag in ['author', etree.PI, ]:
                 s.append(copy.copy(e))
+                # remove anchor from /front/author to avoid duplications
+                if e.get('anchor'):
+                    e.attrib.pop('anchor')
         back.append(s)
         #
         self.back_section_add_number(s, e)

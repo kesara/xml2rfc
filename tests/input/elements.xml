@@ -553,6 +553,12 @@ Definition list, third bullet, fourth element:
                <t>Definition list, third bullet, ninth element, t.  Quid? si nos non interpretum fungimur munere, sed tuemur ea, quae audiebamus, conferebamus, neque erat umquam controversia, quid ego intellegerem, sed quid probarem.  Extremum autem esse bonorum eum voluptate vivere.  Sic faciam igitur, inquit: unam rem explicabo, eamque maximam, de physicis alias, et quidem locis pluribus.              </t>
 
             </dd>
+            <dt>Definition list with blockquote in &lt;dd&gt;</dt>
+            <dd>
+               <blockquote quotedFrom="RFC 865">
+                 There is no specific syntax for the quote.
+               </blockquote>
+            </dd>
          </dl>
       </section>
       <section>
@@ -1051,6 +1057,32 @@ from the Cherokee block look similar to the ASCII characters
              </ul>
              <blockquote quotedFrom="Benjamin Franklin">
                 Tell me and I forget. Teach me and I remember. Involve me and I learn.
+             </blockquote>
+             <blockquote>
+               <ul>
+                 <li>First item</li>
+                 <li>Second item</li>
+                 <li>
+                   <t>Third item</t>
+                   <ul>
+                     <li>First of third</li>
+                     <li>Second of third</li>
+                   </ul>
+                 </li>
+               </ul>
+             </blockquote>
+             <blockquote>
+               <ol>
+                 <li>First item</li>
+                 <li>Second item</li>
+                 <li>
+                   <t>Third item</t>
+                   <ol>
+                     <li>First of third</li>
+                     <li>Second of third</li>
+                   </ol>
+                 </li>
+               </ol>
              </blockquote>
          </aside>
          <aside>

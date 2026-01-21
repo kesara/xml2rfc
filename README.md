@@ -14,6 +14,8 @@
 
 - [Changelog](https://github.com/ietf-tools/xml2rfc/blob/main/CHANGELOG.md)
 - [Installation](#installation)
+- [Docker container](#docker-container)
+- [Updating xml2rfc](#updating-xml2rfc)
 - [Usage](#usage)
 - [Contributing](https://github.com/ietf-tools/.github/blob/main/CONTRIBUTING.md)
 - [Getting Started](#getting-started)
@@ -25,13 +27,38 @@
 
 ### Introduction
 
-The [IETF] uses a specific format for the standards and other documents it publishes as [RFCs], and for the draft documents which are produced when developing documents for publications. There exists a number of different tools to facilitate the formatting of drafts and RFCs according to the existing rules, and this tool, **xml2rfc**, is one of them. It takes as input an xml file that contains the text and meta-information about author names etc., and transforms it into suitably formatted output. The input xml file should follow the grammars in [RFC7749] *(for v2 documents)* or [RFC7991] *(for v3 documents)*. Note that the grammar for v3 is still being refined, and changes will eventually be captured in the [bis draft for 7991]. Changes not yet captured can be seen in the xml2rfc source [v3.rng], or in the [documentation xml2rfc produces] with its `--doc` flag.
+The [IETF] uses a specific format for the standards and other documents it publishes as [RFCs], and for the draft documents which are produced when developing documents for publications. There exists a number of different tools to facilitate the formatting of drafts and RFCs according to the existing rules, and this tool, **xml2rfc**, is one of them. It takes as input an xml file that contains the text and meta-information about author names etc., and transforms it into suitably formatted output. The input xml file should follow the grammars in [RFC7749] *(for v2 documents)* or [RFC7991] *(for v3 documents)*.
+
+[RFCXML vocabulary reference] is available at [authors.ietf.org].
 
 **xml2rfc** provides a variety of output formats. See the command line help for a full list of formats. It also provides conversion from v2 to v3, and can run the [preptool] on its input.
 
 ### Installation
 
-Installation of the python package is done as usual with `pip install xml2rfc`, using appropriate switches.
+`xml2rfc` is available as Python package and container image (see [Docker-container-usage](#Docker-container-usage)).
+You can install the python package with the following command:
+
+```sh
+pip install xml2rfc
+```
+
+If you're using [pipx](https://pipx.pypa.io/stable/), you can install `xml2rfc` with the following command:
+```sh
+pipx install xml2rfc
+```
+
+`xml2rfc` also provides `pdf` extra package to install required packages required for PDF file generation.
+See [next section](#installation-of-support-libraries-for-the-pdf-formatter) about additional requirements for PDF generation.
+
+To install `xml2rfc` with PDF generation support run:
+```sh
+pip install "xml2rfc[pdf]"
+```
+
+To install `pdf` extra with `pipx` run:
+```sh
+pipx install "xml2rfc[pdf]"
+```
 
 #### Installation of support libraries for the PDF-formatter
 
@@ -42,20 +69,64 @@ In order to generate PDFs, **xml2rfc** uses the [WeasyPrint] module, which depen
 2. Next, install WeasyPrint python modules using pip.
 
 ```sh
-pip install 'weasyprint>=61.0'
+pip install "xml2rfc[pdf]"
 ```
-3. Finally, install the full **Noto Font** and **Roboto Mono** packages:
-  * Download the full font file from:
-    https://noto-website-2.storage.googleapis.com/pkgs/Noto-unhinted.zip
-  * Follow the installation instructions at
-    https://www.google.com/get/noto/help/install/
-  * Go to https://fonts.google.com/specimen/Roboto+Mono, and download the
-    font. Follow the installation instructions above, as applied to this download.
-  * Go to https://fonts.google.com/noto/specimen/Noto+Sans+Math, and
-    download the font. Follow the installation instructions above, as
-    applied to this download.
+3. Finally, install the required fonts:
+  * Download latest fonts from [xml2rfc-fonts](https://github.com/ietf-tools/xml2rfc-fonts/releases/latest).
+  * In the **Assets** section, download either the `tar.gz` or the `zip` archive.
+  * Extract the contents of the downloaded `xml2rfc-fonts` archive.
+  * Install the fonts found in the `noto` and `roboto_mono` directories to your operating system.
 
 With these installed and available to **xml2rfc**, the `--pdf` switch will be enabled.
+
+### Docker container
+
+A series of docker images are available to accommodate various use cases. The table below describes the features of each image type. 
+
+| Docker image name | Description                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| xml2rfc-slim      | xml2rfc without PDF support; small image.                                                |
+| xml2rfc-base      | xml2rfc with PDF generation and required fonts; large image.                             |
+| xml2rfc-dev       | xml2rfc with multiple Python versions and development tools; large image for developers. |
+
+Example using the `xml2rfc-slim` image:
+
+```sh
+docker run --rm `# automatically remove container upon termination` \
+  -v "$(pwd):/data" `# bind current working directory to /data` \
+  ghcr.io/ietf-tools/xml2rfc-slim:latest \
+  --html example.xml
+# if input is example.xml, output will be example.html
+```
+
+Single line:
+
+```sh
+docker run --rm -v "$(pwd):/data" ghcr.io/ietf-tools/xml2rfc-slim:latest --html example.xml
+```
+
+Development images are further documented under [#docker-dev-environment](#docker-dev-environment).
+
+#### Image versioning
+
+Docker image versions follow the regular release versioning.
+Use a versioned tag to ensure reproducibility in CI / CD:
+
+```sh
+docker run --rm -v "$(pwd):/data" ghcr.io/ietf-tools/xml2rfc-slim:v3.32.0 --html example.xml
+```
+
+### Updating xml2rfc
+
+To update `xml2rfc`, run the following command:
+```sh
+pip install --upgrade xml2rfc
+```
+
+If you are using `pipx`, you can update it with:
+```sh
+pipx upgrade xml2rfc
+```
 
 ### Usage
 
@@ -100,9 +171,8 @@ The initial build may take time because it downloads all required fonts as well.
 [RFCs]: https://www.rfc-editor.org/
 [RFC7749]: https://www.rfc-editor.org/info/rfc7749
 [RFC7991]: https://www.rfc-editor.org/info/rfc7991
-[bis draft for 7991]: https://datatracker.ietf.org/doc/draft-iab-rfc7991bis/
-[v3.rng]: xml2rfc/data/v3.rng
-[documentation xml2rfc produces]: https://ietf-tools.github.io/xml2rfc/
+[RFCXML vocabulary reference]: https://authors.ietf.org/en/rfcxml-vocabulary
+[authors.ietf.org]: https://authors.ietf.org/
 [preptool]: https://www.rfc-editor.org/info/rfc7998
 [WeasyPrint]: https://weasyprint.org/
 [WeasyPrint Docs]: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html

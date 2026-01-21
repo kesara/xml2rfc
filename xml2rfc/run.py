@@ -10,7 +10,6 @@ import json
 import lxml.etree
 import os
 import pycountry
-import six
 import sys
 
 # If this script is renamed to 'xml2rfc.py' on a Windows system, the import
@@ -68,10 +67,7 @@ def print_country_help(options, parser):
     ids = list(country_ids.values())
     ids.sort()
     print('Known country codes and country names for use with <country>:\n')
-    if six.PY3:
-        print(('\n'.join([ '  '+'  -  '.join(v) for v in ids])))
-    else:
-        print(('\n'.join([ '  '+'  -  '.join(v) for v in ids])).encode('utf-8'))
+    print(('\n'.join([ '  '+'  -  '.join(v) for v in ids])))
     sys.exit()
 
 
@@ -87,27 +83,20 @@ def get_pdf_help(missing_libs=""):
 
     2. Next, install weasyprint python modules using pip.
 
-        pip install 'weasyprint>=61.0'
+        pip install "xml2rfc[pdf]"
 
+    3. Finally, install the required fonts:
+       * Download latest fonts from xml2rfc-fonts.
+         https://github.com/ietf-tools/xml2rfc-fonts/releases/latest
 
-    3. Finally, install the full Noto Font and Roboto Mono packages:
+       * In the "Assets" section, download either the tar.gz or
+         the zip archive.
 
-       * Download the full font file from:
-         https://noto-website-2.storage.googleapis.com/pkgs/Noto-unhinted.zip
-         or follow the 'DOWNLOAD ALL FONTS' link on this page:
-         https://www.google.com/get/noto/
+       * Extract the contents of the downloaded xml2rfc-fonts archive.
 
-       * Follow the installation instructions at
-         https://www.google.com/get/noto/help/install/
+       * Install the fonts found in the noto and roboto_mono directories
+         to your operating system.
 
-       * Go to https://fonts.google.com/specimen/Roboto+Mono, and download the
-         font. Follow the installation instructions above, as applied to this
-         download.
-
-       * Go to https://fonts.google.com/noto/specimen/Noto+Sans+Math, and
-         download the font. Follow the installation instructions above, as
-         applied to this download.
-    
     With these libraries, modules, and fonts installed and available to
     xml2rfc, the --pdf switch will be enabled.
     """
@@ -209,6 +198,8 @@ def main():
                            help='outputs formatted text to file, unpaginated (only v2 input)')
     formatgroup.add_argument('--expand', action='store_true',
                            help='outputs XML to file with all references expanded')
+    formatgroup.add_argument('--use-bib', action='store_true',
+                           help='update all datatracker references with bib.ietf.org')
     formatgroup.add_argument('--v2v3', action='store_true',
                            help='convert vocabulary version 2 XML to version 3')
     formatgroup.add_argument('--preptool', action='store_true',
@@ -295,6 +286,10 @@ def main():
                             help='More easily do line breaks after hyphens in table cells to give a more compact table')
     textoptions.add_argument('--table-borders', default='full', choices=['full', 'light', 'minimal', 'min', ],
                             help='The style of table borders to use for text output; one of full/light/minimal')
+    textoptions.add_argument('--rfc-html-archive-url', default="https://www.rfc-editor.org/rfc/",
+                           help='URL for HTML file archive of RFCs')
+    textoptions.add_argument('--id-html-archive-url', default="https://www.ietf.org/archive/id/",
+                           help='URL for HTML file archive Internet-Drafts')
 
     htmloptions = optionparser.add_argument_group('Html Format Options')
     htmloptions.add_argument('--css', default=None, metavar="FILE",
@@ -302,11 +297,11 @@ def main():
     htmloptions.add_argument('--external-css', action='store_true', default=False,
                            help='place css in external files')
     htmloptions.add_argument('--no-external-css', dest='external_css', action='store_false',
-                           help='place css in external files')
+                           help="don't place css in external files")
     htmloptions.add_argument('--external-js', action='store_true', default=False,
                            help='place js in external files')
     htmloptions.add_argument('--no-external-js', dest='external_js', action='store_false',
-                           help='place js in external files')
+                           help="don't place js in external files")
     htmloptions.add_argument('--rfc-base-url', default="https://www.rfc-editor.org/rfc/",
                            help='Base URL for RFC links')
     htmloptions.add_argument('--id-base-url', default="https://datatracker.ietf.org/doc/html/",
@@ -352,7 +347,6 @@ def main():
     # Some additional values not exposed as options
     options.doi_base_url = "https://doi.org/"
     options.no_css = False
-    options.image_svg = False
 
     # --- Set default values ---------------------------------
 
@@ -463,7 +457,7 @@ def main():
             options.output_path = options.basename
             options.basename = None
     #
-    num_formats = len([ o for o in [options.raw, options.text, options.nroff, options.html, options.expand, options.v2v3, options.preptool, options.info, options.pdf, options.unprep ] if o])
+    num_formats = len([ o for o in [options.raw, options.text, options.nroff, options.html, options.expand, options.use_bib, options.v2v3, options.preptool, options.info, options.pdf, options.unprep ] if o])
     if num_formats > 1 and (options.filename or options.output_filename):
         sys.exit('Cannot use an explicit output filename when generating more than one format, '
                  'use --path instead.')
@@ -583,6 +577,9 @@ def main():
             xml2rfc.log.exception('Unable to validate the XML document: ' + args[0], errors)
             sys.exit(1)
 
+    # sanitize the document
+    xmlrfc.sanitize()
+
     if options.filename:
         xml2rfc.log.warn("The -f and --filename options are deprecated and will"
                         " go away in version 3.0 of xml2rfc.  Use -o instead")
@@ -669,6 +666,15 @@ def main():
             options.output_filename = None
 
         # --- End of legacy formatter invocations ---
+        if options.use_bib:
+            xmlrfc = parser.parse(remove_comments=False, quiet=True, normalize=False, strip_cdata=False, add_xmlns=True)
+            filename = options.output_filename
+            if not filename:
+                filename = basename + '.bib.xml'
+                options.output_filename = filename
+            expander = xml2rfc.DatatrackerToBibConverter(xmlrfc, options=options, date=options.date)
+            expander.write(filename)
+            options.output_filename = None
 
         if options.expand and not options.legacy:
             xmlrfc = parser.parse(remove_comments=False, quiet=True, normalize=False, strip_cdata=False, add_xmlns=True)
@@ -774,12 +780,8 @@ def main():
             xmlrfc.tree = prep.prep()
             if xmlrfc.tree:
                 info = extract_anchor_info(xmlrfc.tree)
-                if six.PY2:
-                    with open(filename, 'w') as fp:
-                        json.dump(info, fp, indent=2, ensure_ascii=False, encoding='utf-8')
-                else:
-                    with io.open(filename, 'w', encoding='utf-8') as fp:
-                        json.dump(info, fp, indent=2, ensure_ascii=False)
+                with io.open(filename, 'w', encoding='utf-8') as fp:
+                    json.dump(info, fp, indent=2, ensure_ascii=False)
                 if not options.quiet:
                     xml2rfc.log.write('Created file', filename)
 

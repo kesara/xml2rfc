@@ -5,8 +5,6 @@ from __future__ import unicode_literals, print_function, division
 import lxml
 import os
 import re
-#import sys
-import six
 import unicodedata
 import xml2rfc
 
@@ -15,12 +13,8 @@ from io import open
 from lxml.html import html_parser
 from lxml.html.builder import ElementMaker
 
-if six.PY2:
-    from urllib import urlopen
-    from urlparse import urlparse, urljoin
-elif six.PY3:
-    from urllib.request import urlopen
-    from urllib.parse import urlparse, urljoin
+from urllib.request import urlopen
+from urllib.parse import urlparse, urljoin
 
 try:
     from xml2rfc import debug
@@ -29,7 +23,7 @@ except ImportError:
     pass
 
 from xml2rfc import log, strings
-from xml2rfc.writers.base import default_options, BaseV3Writer, RfcWriterError
+from xml2rfc.writers.base import default_options, BaseV3Writer, RfcWriterError, SUBSERIES
 from xml2rfc.uniscripts import is_script
 from xml2rfc.util.date import extract_date, augment_date, format_date, format_date_iso, get_expiry_date
 from xml2rfc.util.name import ( full_author_name_expansion, short_author_role,
@@ -39,7 +33,7 @@ from xml2rfc.util.name import ( full_author_name_expansion, short_author_role,
 from xml2rfc.util.postal import ( get_normalized_address_info, address_hcard_properties,
                                 get_address_format_rules, address_field_mapping, )
 from xml2rfc.util.unicode import expand_unicode_element
-from xml2rfc.utils import namespaces, is_htmlblock, find_duplicate_html_ids, build_dataurl, sdict, clean_text
+from xml2rfc.utils import namespaces, is_htmlblock, find_duplicate_html_ids, sdict, clean_text
 
 #from xml2rfc import utils
 
@@ -221,7 +215,7 @@ def get_bidi_alignment(address):
         line = address[field]
         if line:
             for ch in line:
-                if isinstance(ch, six.text_type):
+                if isinstance(ch, str):
                     dir = unicodedata.bidirectional(ch)
                     if dir in ['R', 'AL']:
                         return 'right'
@@ -513,7 +507,7 @@ class HtmlWriter(BaseV3Writer):
     # 
     #    <link rel="alternate" type="application/rfc+xml" href="source.xml">
 
-        add.link(head, None, href=self.xmlrfc.source, rel='alternate', type='application/rfc+xml')
+        add.link(head, None, href=os.path.basename(self.xmlrfc.source), rel='alternate', type='application/rfc+xml')
 
         if self.options.attach_xml:
             # add attachment for PDF
@@ -620,10 +614,13 @@ class HtmlWriter(BaseV3Writer):
                             log.warn("Could not write to %s: %s" % (jsout, exception))
                     else:
                         add.script(head, None, js, type="application/javascript")
-            # Add external script tag -- the content might be newer than the
-            # JS we included above
-            s = add.script(body, None, src=self.options.metadata_js_url)
-            s.tail = '\n'
+            if self.options.metadata_js_url and (
+                urlparse(self.options.metadata_js_url).scheme
+                or self.options.external_js
+            ):
+                # Add external script tag
+                s = add.script(body, None, src=self.options.metadata_js_url)
+                s.tail = '\n'
 
     # 6.4.  Page Headers and Footers
     # 
@@ -926,8 +923,6 @@ class HtmlWriter(BaseV3Writer):
             vbox = svg.get('viewBox')
             svgw = maybefloat(svg.get('width'))
             svgh = maybefloat(svg.get('height'))
-            if svgw or svgh:
-                self.warn(x, "Found SVG with width or height specified, which will make the artwork not scale.  Specify a viewBox only to let the artwork scale.")
             try:
                 if vbox:
                     xo,yo,w,h = re.split(',? +', vbox.strip('()'))
@@ -936,26 +931,16 @@ class HtmlWriter(BaseV3Writer):
                     if not (svgw and svgh):
                         svgw = float(w)-float(xo)
                         svgh = float(h)-float(yo)
+                elif svgw and svgh:
+                    svg.set('viewBox', '0 0 %s %s' % (svgw, svgh))
                 else:
-                    if svgw and svgh:
-                        svg.set('viewBox', '0 0 %s %s' % (svgw, svgh))
-                    else:
-                        self.err(x, "Cannot place SVG properly when neither viewBox nor width and height is available") 
-                        return None
+                    self.err(x, "Cannot place SVG properly when neither viewBox nor width and height is available")
+                    return None
             except ValueError as e:
                 self.err(x, "Error when calculating SVG size: %s" % e)
-            imgw = 660 if self.options.image_svg else 724
-            if imgw < svgw and svg.get('width') == None:
-                # maybe issue a warning here?
-                pass
-            #
-            if self.options.image_svg:
-                if not svg.get('width'):
-                    svg.set('width', "%s"%svgw) # Needed by the PDF renderer for proper scaling
-                data = build_dataurl('image/svg+xml', lxml.etree.tostring(svg))
-                add.img(div, None, src=data, alt=x.get('alt'))
-            else:
-                div.append(svg)
+
+            div.append(svg)
+
             if x.getparent().tag != 'figure':
                 self.maybe_add_pilcrow(div)
             else:
@@ -2162,18 +2147,14 @@ class HtmlWriter(BaseV3Writer):
             self.render(inner, c)
         for ctag in ('title', 'refcontent', 'stream', 'seriesInfo', 'date', ):
             for c in x.iterdescendants(ctag):
-                if p.tag == 'referencegroup' and c.tag == 'seriesInfo' and c.get('name') == 'DOI':
-                    # Don't render DOI within a reference group
-                    continue              
                 if len(inner):
                     inner[-1].tail = ', '
                 self.render(inner, c)
-        if p.tag != 'referencegroup':
-            target = x.get('target')
-            if len(inner):
-                inner[-1].tail = ', '
-            if target:
-                inner.append( build.span('<', build.a(target, href=target), '>') )
+        target = x.get('target')
+        if len(inner):
+            inner[-1].tail = ', '
+        if target:
+            inner.append( build.span('<', build.a(target, href=target), '>') )
         if len(inner):
             inner[-1].tail = '. '
         for ctag in ('annotation', ):
@@ -2204,13 +2185,29 @@ class HtmlWriter(BaseV3Writer):
     def render_referencegroup(self, h, x):
         dt = add.dt(h, x, '[%s]'%x.get('derivedAnchor'))
         dd = add.dd(h, None)
+        target = x.get('target')
+        subseries = False
         # workaround for weasyprint's unwillingness to break between <dd> and
         # <dt>: add an extra <dd> that is very prone to page breaks.  See CSS.
         add.dd(h, None, classes='break')
+        for series in x.xpath('.//seriesInfo'):
+            if series.get('name') in SUBSERIES.keys():
+                text = f"{SUBSERIES[series.get('name')]} {series.get('value')}"
+                subdiv = build.div(text, classes='refInstance')
+                if target:
+                    subdiv.text += ', '
+                    subdiv.append(build.span('<', build.a(target, href=target), '>'))
+                    subdiv[0].tail = '.'
+                else:
+                    subdiv.text += '.'
+                subdiv.append(build.br())
+                subdiv.append(build.span(f"At the time of writing, this {series.get('name')} comprises the following:"))
+                dd.append(subdiv)
+                subseries = True
+                break
         for c in x.getchildren():
             self.render(dd, c)
-        target = x.get('target')
-        if target:
+        if target and not subseries:
             dd.append( build.span('<', build.a(target, href=target), '>') )
         return dt, dd
 

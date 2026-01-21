@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta content="Cherokee,Common,Greek,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Xml2rfc Vocabulary Version 3 Schema xml2rfc release 3.19.3</title>
+<title>Xml2rfc Vocabulary Version 3 Schema xml2rfc release 3.30.2</title>
 <meta content="xml2rfc(1)" name="author">
 <meta content="
        
        This document provides information about the XML schema implemented in this release of xml2rfc, and the individual elements of that schema.  The document is generated from the RNG schema file that is part of the xml2rfc distribution, so schema information in this document should always be in sync with the schema in actual use.  The textual descriptions depend on manual updates in order to reflect the implementation.
        
     " name="description">
-<meta content="xml2rfc 3.19.3" name="generator">
-<meta content="xml2rfc-docs-3.19.3" name="ietf.draft">
-<link href="tests/out/docfile.xml" rel="alternate" type="application/rfc+xml">
+<meta content="xml2rfc 3.30.2" name="generator">
+<meta content="xml2rfc-docs-3.30.2" name="ietf.draft">
+<link href="docfile.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <link href="xml2rfc.css" rel="stylesheet">
 <link href="rfc-local.css" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
 <thead><tr>
 <td class="left"></td>
 <td class="center">Xml2rfc Vocabulary V3 Schema</td>
-<td class="right">February 2024</td>
+<td class="right">September 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">xml2rfc(1)</td>
@@ -39,7 +39,7 @@
 <dd class="workgroup">xml2rfc(1)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-06" class="published">6 February 2024</time>
+<time datetime="2025-09-24" class="published">24 September 2025</time>
     </dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
@@ -49,7 +49,7 @@
 </dd>
 </dl>
 </div>
-<h1 id="title">Xml2rfc Vocabulary Version 3 Schema<br>xml2rfc release 3.19.3</h1>
+<h1 id="title">Xml2rfc Vocabulary Version 3 Schema<br>xml2rfc release 3.30.2</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">
@@ -369,9 +369,9 @@
 <p id="section-1-4">
        For an introduction to the v3 schema, with suggestions on how to transition from v2, see <span>[<a href="#INTRO-TO-V3" class="cite xref">INTRO-TO-V3</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">
-       The latest version of this documentation is available in HTML form at <span><a href="https://ietf-tools.github.io/xml2rfc/">https://ietf-tools.github.io/xml2rfc/</a></span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
+       The RFCXML vocabulary reference is available at <span><a href="https://authors.ietf.org/en/rfcxml-vocabulary">https://authors.ietf.org/en/rfcxml-vocabulary</a></span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">
-            This documentation applies to xml2rfc version 3.19.3.<a href="#section-1-6" class="pilcrow">¶</a></p>
+            This documentation applies to xml2rfc version 3.30.2.<a href="#section-1-6" class="pilcrow">¶</a></p>
 </section>
 <section id="section-2">
       <h2 id="name-schema-version-3-elements">
@@ -806,7 +806,7 @@ src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww..."&gt;
         </h3>
 <p id="section-2.11-1">
        Specifies that a block of text is a quotation.<a href="#section-2.11-1" class="pilcrow">¶</a></p>
-<p id="section-2.11-2">This element can be a child element of &lt;<a href="#element-aside" class="internal xref">aside</a>&gt;, &lt;<a href="#element-li" class="internal xref">li</a>&gt;,  and &lt;<a href="#element-section" class="internal xref">section</a>&gt;.<a href="#section-2.11-2" class="pilcrow">¶</a></p>
+<p id="section-2.11-2">This element can be a child element of &lt;<a href="#element-aside" class="internal xref">aside</a>&gt;, &lt;<a href="#element-dd" class="internal xref">dd</a>&gt;, &lt;<a href="#element-li" class="internal xref">li</a>&gt;,  and &lt;<a href="#element-section" class="internal xref">section</a>&gt;.<a href="#section-2.11-2" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-2.11-3">
           <dt id="section-2.11-3.1">Content schema:</dt>
           <dd style="margin-left: 1.5em" id="section-2.11-3.2"> ( ( <a href="#element-artset" class="internal xref">artset</a> | <a href="#element-artwork" class="internal xref">artwork</a> | <a href="#element-dl" class="internal xref">dl</a> | <a href="#element-figure" class="internal xref">figure</a> | <a href="#element-ol" class="internal xref">ol</a> | <a href="#element-sourcecode" class="internal xref">sourcecode</a> | <a href="#element-t" class="internal xref">t</a> | <a href="#element-ul" class="internal xref">ul</a> )+ | ( text | <a href="#element-bcp14" class="internal xref">bcp14</a> | <a href="#element-br" class="internal xref">br</a> | <a href="#element-cref" class="internal xref">cref</a> | <a href="#element-em" class="internal xref">em</a> | <a href="#element-eref" class="internal xref">eref</a> | <a href="#element-iref" class="internal xref">iref</a> | <a href="#element-strong" class="internal xref">strong</a> | <a href="#element-sub" class="internal xref">sub</a> | <a href="#element-sup" class="internal xref">sup</a> | <a href="#element-tt" class="internal xref">tt</a> | <a href="#element-u" class="internal xref">u</a> | <a href="#element-xref" class="internal xref">xref</a> )+ )<a href="#section-2.11-3.2" class="pilcrow">¶</a>
@@ -1192,7 +1192,7 @@ src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww..."&gt;
 <p id="section-2.21-2">This element can be a child element of &lt;<a href="#element-dl" class="internal xref">dl</a>&gt;.<a href="#section-2.21-2" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-2.21-3">
           <dt id="section-2.21-3.1">Content schema:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.21-3.2"> ( ( <a href="#element-artset" class="internal xref">artset</a> | <a href="#element-artwork" class="internal xref">artwork</a> | <a href="#element-aside" class="internal xref">aside</a> | <a href="#element-dl" class="internal xref">dl</a> | <a href="#element-figure" class="internal xref">figure</a> | <a href="#element-ol" class="internal xref">ol</a> | <a href="#element-sourcecode" class="internal xref">sourcecode</a> | <a href="#element-t" class="internal xref">t</a> | <a href="#element-table" class="internal xref">table</a> | <a href="#element-ul" class="internal xref">ul</a> )+ | ( text | <a href="#element-bcp14" class="internal xref">bcp14</a> | <a href="#element-br" class="internal xref">br</a> | <a href="#element-cref" class="internal xref">cref</a> | <a href="#element-em" class="internal xref">em</a> | <a href="#element-eref" class="internal xref">eref</a> | <a href="#element-iref" class="internal xref">iref</a> | <a href="#element-strong" class="internal xref">strong</a> | <a href="#element-sub" class="internal xref">sub</a> | <a href="#element-sup" class="internal xref">sup</a> | <a href="#element-tt" class="internal xref">tt</a> | <a href="#element-u" class="internal xref">u</a> | <a href="#element-xref" class="internal xref">xref</a> )+ )<a href="#section-2.21-3.2" class="pilcrow">¶</a>
+          <dd style="margin-left: 1.5em" id="section-2.21-3.2"> ( ( <a href="#element-artset" class="internal xref">artset</a> | <a href="#element-artwork" class="internal xref">artwork</a> | <a href="#element-aside" class="internal xref">aside</a> | <a href="#element-blockquote" class="internal xref">blockquote</a> | <a href="#element-dl" class="internal xref">dl</a> | <a href="#element-figure" class="internal xref">figure</a> | <a href="#element-ol" class="internal xref">ol</a> | <a href="#element-sourcecode" class="internal xref">sourcecode</a> | <a href="#element-t" class="internal xref">t</a> | <a href="#element-table" class="internal xref">table</a> | <a href="#element-ul" class="internal xref">ul</a> )+ | ( text | <a href="#element-bcp14" class="internal xref">bcp14</a> | <a href="#element-br" class="internal xref">br</a> | <a href="#element-cref" class="internal xref">cref</a> | <a href="#element-em" class="internal xref">em</a> | <a href="#element-eref" class="internal xref">eref</a> | <a href="#element-iref" class="internal xref">iref</a> | <a href="#element-strong" class="internal xref">strong</a> | <a href="#element-sub" class="internal xref">sub</a> | <a href="#element-sup" class="internal xref">sup</a> | <a href="#element-tt" class="internal xref">tt</a> | <a href="#element-u" class="internal xref">u</a> | <a href="#element-xref" class="internal xref">xref</a> )+ )<a href="#section-2.21-3.2" class="pilcrow">¶</a>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -4225,11 +4225,12 @@ src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww..."&gt;
 <dl class="references">
 <dt id="BCP14">[BCP14]</dt>
       <dd>
+<div class="refInstance">Best Current Practice 14, <span>&lt;<a href="https://www.rfc-editor.org/bcp/bcp14.txt">https://www.rfc-editor.org/bcp/bcp14.txt</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC2119">
-          <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>. </div>
+          <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </div>
 <div class="refInstance" id="RFC8174">
-          <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/bcp/bcp14.txt">https://www.rfc-editor.org/bcp/bcp14.txt</a>&gt;</span>
+          <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 <dt id="IDGUIDE">[IDGUIDE]</dt>
@@ -4899,6 +4900,7 @@ dd =
     (( artset
        | artwork
        | aside
+       | blockquote
        | dl
        | figure
        | ol
@@ -5615,7 +5617,7 @@ start |= rfc
         </h3>
 <p id="appendix-B.3-1">
                One or more of the following output formats may be specified. The default is --text. The destination filename will be based on the input filename, unless --out=FILE or --basename=BASE is used.
-               The group has 10 options.<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
+               The group has 11 options.<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="appendix-B.3-2">
           <dt id="appendix-B.3-2.1">
 <div id="option--text">
@@ -5672,39 +5674,48 @@ start |= rfc
 </dd>
           <dd class="break"></dd>
 <dt id="appendix-B.3-2.13">
-<div id="option--v2v3">
-<code>--v2v3</code>                    </div>
+<div id="option--use-bib">
+<code>--use-bib</code>                    </div>
           </dt>
 <dd style="margin-left: 1.5em" id="appendix-B.3-2.14">
             <p id="appendix-B.3-2.14.1">
-                          Convert vocabulary version 2 XML to version 3.<a href="#appendix-B.3-2.14.1" class="pilcrow">¶</a></p>
+                          Update all datatracker references with bib.ietf.org.<a href="#appendix-B.3-2.14.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="appendix-B.3-2.15">
-<div id="option--preptool">
-<code>--preptool</code>                    </div>
+<div id="option--v2v3">
+<code>--v2v3</code>                    </div>
           </dt>
 <dd style="margin-left: 1.5em" id="appendix-B.3-2.16">
             <p id="appendix-B.3-2.16.1">
-                          Run preptool on the input.<a href="#appendix-B.3-2.16.1" class="pilcrow">¶</a></p>
+                          Convert vocabulary version 2 XML to version 3.<a href="#appendix-B.3-2.16.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="appendix-B.3-2.17">
-<div id="option--unprep">
-<code>--unprep</code>                    </div>
+<div id="option--preptool">
+<code>--preptool</code>                    </div>
           </dt>
 <dd style="margin-left: 1.5em" id="appendix-B.3-2.18">
             <p id="appendix-B.3-2.18.1">
-                          Reduce prepped xml to unprepped.<a href="#appendix-B.3-2.18.1" class="pilcrow">¶</a></p>
+                          Run preptool on the input.<a href="#appendix-B.3-2.18.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="appendix-B.3-2.19">
-<div id="option--info">
-<code>--info</code>                    </div>
+<div id="option--unprep">
+<code>--unprep</code>                    </div>
           </dt>
 <dd style="margin-left: 1.5em" id="appendix-B.3-2.20">
             <p id="appendix-B.3-2.20.1">
-                          Generate a JSON file with anchor to section lookup information.<a href="#appendix-B.3-2.20.1" class="pilcrow">¶</a></p>
+                          Reduce prepped xml to unprepped.<a href="#appendix-B.3-2.20.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="appendix-B.3-2.21">
+<div id="option--info">
+<code>--info</code>                    </div>
+          </dt>
+<dd style="margin-left: 1.5em" id="appendix-B.3-2.22">
+            <p id="appendix-B.3-2.22.1">
+                          Generate a JSON file with anchor to section lookup information.<a href="#appendix-B.3-2.22.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -6188,6 +6199,26 @@ start |= rfc
             <dd class="break"></dd>
 </dl>
 </dd>
+          <dd class="break"></dd>
+<dt id="appendix-B.7-1.17">
+<div id="option--rfc-html-archive-url">
+<code>--rfc-html-archive-url</code>                    </div>
+          </dt>
+<dd style="margin-left: 1.5em" id="appendix-B.7-1.18">
+            <p id="appendix-B.7-1.18.1"><br>Default value: https://www.rfc-editor.org/rfc/<a href="#appendix-B.7-1.18.1" class="pilcrow">¶</a></p>
+<p id="appendix-B.7-1.18.2">
+                          URL for HTML file archive of RFCs.<a href="#appendix-B.7-1.18.2" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="appendix-B.7-1.19">
+<div id="option--id-html-archive-url">
+<code>--id-html-archive-url</code>                    </div>
+          </dt>
+<dd style="margin-left: 1.5em" id="appendix-B.7-1.20">
+            <p id="appendix-B.7-1.20.1"><br>Default value: https://www.ietf.org/archive/id/<a href="#appendix-B.7-1.20.1" class="pilcrow">¶</a></p>
+<p id="appendix-B.7-1.20.2">
+                          URL for HTML file archive Internet-Drafts.<a href="#appendix-B.7-1.20.2" class="pilcrow">¶</a></p>
+</dd>
         <dd class="break"></dd>
 </dl>
 </section>
@@ -6366,7 +6397,7 @@ external-js = false
 <p id="appendix-D-1">
 
             The following variables are available for use in an xml2rfc
-            manpage Jinja2 template, as of xml2rfc version 3.19.3:<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+            manpage Jinja2 template, as of xml2rfc version 3.30.2:<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="appendix-D-2">
         <dt id="appendix-D-2.1">{{ bare_latin_tags }}:</dt>
         <dd style="margin-left: 1.5em" id="appendix-D-2.2"></dd>

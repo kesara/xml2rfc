@@ -1,10 +1,10 @@
 xml2rfc(1)                                                    xml2rfc(1)
-                                                         6 February 2024
+                                                       25 September 2025
 
 
                   Xml2rfc Vocabulary Version 3 Schema
-                         xml2rfc release 3.19.3
-                          xml2rfc-docs-3.19.3
+                         xml2rfc release 3.30.2
+                          xml2rfc-docs-3.30.2
 
 Abstract
 
@@ -51,10 +51,10 @@ Table of Contents
    For an introduction to the v3 schema, with suggestions on how to
    transition from v2, see [INTRO-TO-V3].
 
-   The latest version of this documentation is available in HTML form at
-   https://ietf-tools.github.io/xml2rfc/.
+   The RFCXML vocabulary reference is available at
+   https://authors.ietf.org/en/rfcxml-vocabulary.
 
-   This documentation applies to xml2rfc version 3.19.3.
+   This documentation applies to xml2rfc version 3.30.2.
 
 2.  Schema Version 3 Elements
 
@@ -394,7 +394,8 @@ Table of Contents
 
    Specifies that a block of text is a quotation.
 
-   This element can be a child element of <aside>, <li>, and <section>.
+   This element can be a child element of <aside>, <dd>, <li>, and
+   <section>.
 
    Content schema:  ( ( artset | artwork | dl | figure | ol |
       sourcecode | t | ul )+ | ( text | bcp14 | br | cref | em | eref |
@@ -648,9 +649,10 @@ Table of Contents
 
    This element can be a child element of <dl>.
 
-   Content schema:  ( ( artset | artwork | aside | dl | figure | ol |
-      sourcecode | t | table | ul )+ | ( text | bcp14 | br | cref | em |
-      eref | iref | strong | sub | sup | tt | u | xref )+ )
+   Content schema:  ( ( artset | artwork | aside | blockquote | dl |
+      figure | ol | sourcecode | t | table | ul )+ | ( text | bcp14 |
+      br | cref | em | eref | iref | strong | sub | sup | tt | u | xref
+      )+ )
 
 2.21.1.  "anchor" Attribute
 
@@ -2642,13 +2644,18 @@ Table of Contents
 
 4.  References
 
-   [BCP14]    Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
+   [BCP14]    Best Current Practice 14,
+              <https://www.rfc-editor.org/bcp/bcp14.txt>.
+              At the time of writing, this BCP comprises the following:
+
+              Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
               Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, May 2017.
-
-              <https://www.rfc-editor.org/bcp/bcp14.txt>
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [IDGUIDE]  Housley, R., "Guidelines to Authors of Internet-Drafts",
               December 2010,
@@ -3315,6 +3322,7 @@ Appendix A.  RELAX NG Schema
        (( artset
           | artwork
           | aside
+          | blockquote
           | dl
           | figure
           | ol
@@ -3980,7 +3988,7 @@ B.3.  Format selection
    One or more of the following output formats may be specified.  The
    default is --text.  The destination filename will be based on the
    input filename, unless --out=FILE or --basename=BASE is used.  The
-   group has 10 options.
+   group has 11 options.
 
    --text
       Outputs formatted text to file, with proper page breaks.
@@ -3999,6 +4007,9 @@ B.3.  Format selection
 
    --expand
       Outputs XML to file with all references expanded.
+
+   --use-bib
+      Update all datatracker references with bib.ietf.org.
 
    --v2v3
       Convert vocabulary version 2 XML to version 3.
@@ -4225,6 +4236,18 @@ B.7.  Text Format Options
 
                                      Table 4
 
+   --rfc-html-archive-url
+
+      Default value: https://www.rfc-editor.org/rfc/
+
+      URL for HTML file archive of RFCs.
+
+   --id-html-archive-url
+
+      Default value: https://www.ietf.org/archive/id/
+
+      URL for HTML file archive Internet-Drafts.
+
 B.8.  Html Format Options
 
    --css = FILE
@@ -4319,7 +4342,7 @@ Appendix C.  xml2rfc Configuration Files
 Appendix D.  xml2rfc Documentation Template Variables
 
    The following variables are available for use in an xml2rfc manpage
-   Jinja2 template, as of xml2rfc version 3.19.3:
+   Jinja2 template, as of xml2rfc version 3.30.2:
 
    {{ bare_latin_tags }}:
 

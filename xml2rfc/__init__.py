@@ -3,7 +3,7 @@
 from __future__ import unicode_literals, print_function, division
 
 # Static values
-__version__ = '3.19.4'
+__version__ = '3.31.0'
 NAME         = 'xml2rfc'
 VERSION      = [ int(i) if i.isdigit() else i for i in __version__.split('.') ]
 CACHES       = ['/var/cache/xml2rfc', '~/.cache/xml2rfc']  # Ordered by priority
@@ -16,7 +16,7 @@ from xml2rfc.parser import  XmlRfcError, CachingResolver, XmlRfcParser, XmlRfc
 from xml2rfc.writers import ( BaseRfcWriter, RawTextRfcWriter, PaginatedTextRfcWriter,
 	 HtmlRfcWriter, NroffRfcWriter, ExpandedXmlWriter, RfcWriterError,
          V2v3XmlWriter, PrepToolWriter, TextWriter, HtmlWriter, PdfWriter,
-         ExpandV3XmlWriter, UnPrepWriter, DocWriter
+         ExpandV3XmlWriter, UnPrepWriter, DocWriter, DatatrackerToBibConverter,
      )
 
 # This defines what 'from xml2rfc import *' actually imports:
@@ -25,7 +25,7 @@ __all__ = ['XmlRfcError', 'CachingResolver', 'XmlRfcParser', 'XmlRfc',
            'HtmlRfcWriter', 'NroffRfcWriter', 'ExpandedXmlWriter',
            'RfcWriterError', 'V2v3XmlWriter', 'PrepToolWriter', 'TextWriter',
            'HtmlWriter', 'PdfWriter', 'ExpandV3XmlWriter', 'UnPrepWriter', 
-           'DocWriter',
+           'DocWriter', 'DatatrackerToBibConverter',
        ]
 
 try:

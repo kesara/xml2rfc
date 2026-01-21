@@ -6,17 +6,13 @@ from __future__ import unicode_literals, print_function, division
 
 import base64
 import re
-import six
 import sys
 import textwrap
 
 from collections import OrderedDict
 from lxml.etree import _Comment, _ProcessingInstruction
 
-if six.PY2:
-    from urllib import quote
-else:
-    from urllib.request import quote
+from urllib.request import quote
 
 try:
     from xml2rfc import debug
@@ -64,7 +60,7 @@ class TextWrapper(textwrap.TextWrapper):
             # Tla with leading uppercase, and special cases
             # (Note: v1 spelled out Fig, Tbl, Mrs, Drs, Rep, Sen, Gov, Rev, Gen, Col, Maj and Cap,
             #  but those are redundant with the Tla regex.)
-            r'|([A-Z][a-z][a-z]|Eq|[Cc]f|vs|resp|viz|ibid|[JS]r|M[rs]|Messrs|Mmes|Dr|Profs?|St|Lt|i\.e)\.'
+            r'|([\(\[])?([A-Z][a-z][a-z]|Eq|[Cc]f|vs|resp|viz|ibid|[JS]r|M[rs]|Messrs|Mmes|Dr|Profs?|St|Lt|a\.k\.a|i\.e|e\.g)\.'
             r')\Z' # trailing dot, end of group and end of chunk
             )
 
@@ -365,6 +361,15 @@ def find_duplicate_attr_values(attr, tree):
             else:
                 seen.add(id)
     return dups
+
+def strip_link_attachments(tree):
+    """
+    Find link tags with rel="attachment".
+    """
+    for attachment in tree.xpath('//link[@rel="attachment"]'):
+        xml2rfc.log.warn(f"Removed {attachment}. link relationships type attachment is not allowed.")
+        attachment.getparent().remove(attachment)
+
 
 # ----------------------------------------------------------------------
 # Unicode operations

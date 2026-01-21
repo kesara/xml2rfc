@@ -5,6 +5,289 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.31.0] - 2025-10-08
+### :sparkles: New Features
+- [`640c3cc`](https://github.com/ietf-tools/xml2rfc/commit/640c3ccd80da73855241bf2f0f4a70ae95c7406e) - **html**: Use self hosted fonts *(PR [#1282](https://github.com/ietf-tools/xml2rfc/pull/1282) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1281](https://github.com/ietf-tools/xml2rfc/issues/1281) opened by [@kesara](https://github.com/kesara)*
+- [`54fa6ef`](https://github.com/ietf-tools/xml2rfc/commit/54fa6efe41ecf8815f21ac89ff1bc1b2493d0c39) - Add support for Python 3.14 *(PR [#1278](https://github.com/ietf-tools/xml2rfc/pull/1278) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1236](https://github.com/ietf-tools/xml2rfc/issues/1236) opened by [@kesara](https://github.com/kesara)*
+
+### :memo: Documentation Changes
+- [`f0dd5fa`](https://github.com/ietf-tools/xml2rfc/commit/f0dd5fa1fbdf9e86013578d4fac12cd72c5a41ed) - update CHANGELOG.md + py file versions for v3.30.2 [skip ci] *(PR [#1276](https://github.com/ietf-tools/xml2rfc/pull/1276) by [@github-actions[bot]](https://github.com/apps/github-actions))*
+
+### :wrench: Chores
+- [`5c5ba6c`](https://github.com/ietf-tools/xml2rfc/commit/5c5ba6c88f3bb9948a14b4eda4448b1efbb30684) - setuptools is not needed at runtime anymore *(PR [#1284](https://github.com/ietf-tools/xml2rfc/pull/1284) by [@a-detiste](https://github.com/a-detiste))*
+
+
+## [v3.30.2] - 2025-09-08
+### :bug: Bug Fixes
+- [`73fb1c9`](https://github.com/ietf-tools/xml2rfc/commit/73fb1c91fc62ac540bb6bd24f982f2becf84c1b0) - Add sanitize step to the parser *(commit by [@kesara](https://github.com/kesara))*
+
+### :construction_worker: Build System
+- [`e14cd44`](https://github.com/ietf-tools/xml2rfc/commit/e14cd440c4e1212d5e4180d746f397dec163865a) - Give PR creation permission *(PR [#1275](https://github.com/ietf-tools/xml2rfc/pull/1275) by [@kesara](https://github.com/kesara))*
+
+### :memo: Documentation Changes
+- [`de31a1f`](https://github.com/ietf-tools/xml2rfc/commit/de31a1fa43141c109d73c95cbb673730701f336b) - update CHANGELOG.md + py file versions for v3.30.1 *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.30.1] - 2025-08-26
+
+### :bug: Bug Fixes
+- [`1dc1d33`](https://github.com/ietf-tools/xml2rfc/commit/1dc1d33233bf90be214470da9282a4d91ec8d82f) - **html**: Respect --no-external-js flag *(PR #1266 by @kesara)*
+  - :arrow_lower_right: *fixes issue #1263 opened by @dbuenzli*
+- [`f2b245bc`](https://github.com/ietf-tools/xml2rfc/commit/f2b245bc0aeeac0667c8f74e976c466c5991f0e4) - Strip `link` attachments. *(commit by @kesara)*
+  - :arrow_lower_right: Fixes [GHSA-cfmv-h8fx-85m7](https://github.com/ietf-tools/xml2rfc/security/advisories/GHSA-cfmv-h8fx-85m7)
+
+### :wrench: Chores
+- [`3932c7c`](https://github.com/ietf-tools/xml2rfc/commit/3932c7cf1b8773021e29776ad696638447971c50) - Fix typo in --no-external-css flag description *(PR #1267 by @kesara)*
+- [`3d53fe9`](https://github.com/ietf-tools/xml2rfc/commit/3d53fe9697959a12ba2d9a1e3ab4079812e6bf07) - Install test dependencies before pytests *(PR #1268 by @kesara)*
+
+### :memo: Documentation Changes
+- [`12a305f`](https://github.com/ietf-tools/xml2rfc/commit/12a305f3fc19d9137c67c6db8263b510bbcd2b38) - update CHANGELOG.md + py file versions for v3.30.0 *(commit by @kesara)*
+
+### :construction_worker: Build System
+- [`aca8be9`](https://github.com/ietf-tools/xml2rfc/commit/aca8be90bf5064964d2669d03875b22e372c9ebb) - Update pypi-publish.yml *(commit by @kesara)*
+- [`be48d64`](https://github.com/ietf-tools/xml2rfc/commit/be48d6427f206b64b8355d94f0977ddc575bae01) - Restrict windows GHA to windows-2022 image *(PR #1269 by @kesara)*
+- [`b4f349f`](https://github.com/ietf-tools/xml2rfc/commit/b4f349facd58feb56fd6cc13350a590eebb18ed9) - Use Windows latest (2025) image *(PR #1271 by @kesara)*
+  - :arrow_lower_right: *addresses issue #1270 opened by @kesara*
+
+## [v3.30.0] - 2025-07-17
+
+### :sparkles: New Features
+- [`fd8bca6`](https://github.com/ietf-tools/xml2rfc/commit/fd8bca6e7d7f2b98a76d17fd329467999df64944) - Allow blockquote inside dd *(PR #1239 by @kesara)*
+  - :arrow_lower_right: *addresses issue #570 opened by @ietf-svn-bot*
+
+### :bug: Bug Fixes
+- [`cd93225`](https://github.com/ietf-tools/xml2rfc/commit/cd932258addf3ebbe3ca026773f8f75f79ed4603) - **pdf**: For monospaced text, Add Noto Sans Mono before NOTO_SYMBOLS *(PR #1261 by @dkg)*
+
+### :white_check_mark: Tests
+- [`462cd98`](https://github.com/ietf-tools/xml2rfc/commit/462cd9851d191db19b46771757cda3119eb3b08e) - Add missing test dependency *(PR #1252 by @bkmgit)*
+
+### :construction_worker: Build System
+- [`a406ace`](https://github.com/ietf-tools/xml2rfc/commit/a406acea4d793432a86158b5d1675a34805a15a9) - Create PR with CHANGELOG and version update *(PR #1256 by @kesara)*
+  - :arrow_lower_right: *addresses issue #1251 opened by @kesara*
+- [`4d06c37`](https://github.com/ietf-tools/xml2rfc/commit/4d06c37540b78892dfe3e1c3b5526a8c398ce487) - Install dependencies before running flaketest *(PR #1260 by @kesara)*
+
+### :memo: Documentation Changes
+- [`6153a03`](https://github.com/ietf-tools/xml2rfc/commit/6153a03cc8e5129e623b2c22d775eca7e889056f) - update CHANGELOG.md + py file versions for v3.29.0 *(commit by @kesara)*
+
+### :wrench: Chores
+- [`dce8478`](https://github.com/ietf-tools/xml2rfc/commit/dce8478042b8b8b90c0af6289db406d9dd3bcfaf) - Update pyproject license configuration *(PR #1258 by @kesara)*
+  - :arrow_lower_right: *addresses issue #1250 opened by @kesara*
+- [`02dab85`](https://github.com/ietf-tools/xml2rfc/commit/02dab8511fe02aad0466687b1f12c68cc02ecfdd) - Improve tests configuration *(PR #1257 by @kesara)*
+- [`34eefa3`](https://github.com/ietf-tools/xml2rfc/commit/34eefa37db71ad6834a3984085ac97f52be1c83a) - Avoid github page generation for xml spec *(PR #1248 by @kesara)*
+  - :arrow_lower_right: *addresses issue #1243 opened by @kesara*
+
+## [v3.29.0] - 2025-06-16
+
+### :bug: Bug Fixes
+* fix: Local PIs need to override global ones, not the other way around by @cabo in https://github.com/ietf-tools/xml2rfc/pull/1237
+* Fix for #1204 - single letter names  by @TheEnbyperor in https://github.com/ietf-tools/xml2rfc/pull/1246
+* fix(pdf): Scale large SVG artwork by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1244
+
+### :wrench: Chores
+* chore: Remove v3compat files by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1240
+* chore: Delete obsolete INSTALL file by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1234
+* ci: Fix release GHA issues by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1249
+
+
+## [v3.28.1] - 2025-04-01
+### :wrench: Chores
+* refactor: Unnecessary global declarations by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1233
+* chore(pdf): Update WeasyPrint to v65.0 by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1231
+* ci: Fix GitHub publish issue by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1232
+
+
+## [v3.28.0] - 2025-03-01
+### :sparkles: New Features
+* feat: Remove warning about SVG width and height by @martinthomson in https://github.com/ietf-tools/xml2rfc/pull/1225
+
+### :wrench: Chores
+* docs: Update installation instructions by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1221
+* ci: Remove setup.cfg publish commit step by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1220
+* chore(deps): Update WeasyPrint to v64.1 by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1215
+* chore: Add ACKNOWLEDGMENTS.md file by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1214
+
+
+## [v3.27.0] - 2025-02-09
+### :sparkles: New Features
+ * feat: Respect `--allow-local-file-access` flag in `artwork` and `sourcecode` ([GHSA-432c-wxpg-m4q3](https://github.com/ietf-tools/xml2rfc/security/advisories/GHSA-432c-wxpg-m4q3)) by @kesara https://github.com/ietf-tools/xml2rfc/commit/ec98f9cb4b9a8658222117df037dda473ca3f4e4
+
+### :bug: Bug Fixes
+ * fix: Make warnings respect quite flag by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1217
+
+### :wrench: Chores
+* ci: Fix publish GHA issues by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1213
+* build: Fix and improve Docker images by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1212
+* ci: Run tests daily by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1218
+
+
+## [v3.26.0] - 2025-01-29
+### :sparkles: New Features
+* feat: Add option to update datatracker references by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1168
+* feat: Migrate to pyproject.toml by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1200
+
+### :bug: Bug Fixes
+* fix(html): Use basename for alternative link by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1198
+* fix: Add quotes to pip extra command by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1202
+* fix: Exit gracefully on artwork and sourcecode src file access errors by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1203
+* fix(text): Improve sentence ending logic by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1206
+* fix(pdf): Fix suboptimal overflow issues in the header by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1207
+
+### :wrench: Chores
+* build: Update Python publish GHA by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1208
+* ci: Use correct environment name for testpypi by @kesara in https://github.com/ietf-tools/xml2rfc/pull/1209
+
+
+## [v3.25.0] - 2024-11-25
+### :sparkles: New Features
+- [`7b8ed97`](https://github.com/ietf-tools/xml2rfc/commit/7b8ed97716fca1997d4903799145d532d4390740) - Drop support for Python 3.8 *(PR [#1183](https://github.com/ietf-tools/xml2rfc/pull/1183) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1146](https://github.com/ietf-tools/xml2rfc/issues/1146) opened by [@kesara](https://github.com/kesara)*
+
+### :bug: Bug Fixes
+- [`bf52f86`](https://github.com/ietf-tools/xml2rfc/commit/bf52f861886a19aacc95938d5ba8ea5b62646785) - **pdf**: Fix line height issue with superscripts *(PR [#1165](https://github.com/ietf-tools/xml2rfc/pull/1165) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1160](https://github.com/ietf-tools/xml2rfc/issues/1160) opened by [@ajeanmahoney](https://github.com/ajeanmahoney)*
+- [`b5381ac`](https://github.com/ietf-tools/xml2rfc/commit/b5381ac89bcc4b339a337544afd39f740ddfe404) - Remove deprecated cgi method *(PR [#1182](https://github.com/ietf-tools/xml2rfc/pull/1182) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1153](https://github.com/ietf-tools/xml2rfc/issues/1153) opened by [@kitterma](https://github.com/kitterma)*
+- [`2f17276`](https://github.com/ietf-tools/xml2rfc/commit/2f17276c680a7cb201254ec1894314ee28653c3d) - **text**: Fix truncated text issue in cells with rowspan *(PR [#1184](https://github.com/ietf-tools/xml2rfc/pull/1184) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1155](https://github.com/ietf-tools/xml2rfc/issues/1155) opened by [@ajeanmahoney](https://github.com/ajeanmahoney)*
+
+### :memo: Documentation Changes
+- [`f0aeb65`](https://github.com/ietf-tools/xml2rfc/commit/f0aeb656770d7c26118dedb33d9dcbcc0e66b466) - update CHANGELOG.md + py file versions for v3.24.0 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+### :wrench: Chores
+- [`5d38e19`](https://github.com/ietf-tools/xml2rfc/commit/5d38e192342b1b764f14e71eff29f73562db8bb5) - Remove obsolete script *(PR [#1185](https://github.com/ietf-tools/xml2rfc/pull/1185) by [@kesara](https://github.com/kesara))*
+- [`8085bcc`](https://github.com/ietf-tools/xml2rfc/commit/8085bcce2f33c3156641fb790b107536ef6b16f5) - Cleanup MANIFEST.in *(PR [#1186](https://github.com/ietf-tools/xml2rfc/pull/1186) by [@kesara](https://github.com/kesara))*
+
+
+## [v3.24.0] - 2024-10-28
+### :sparkles: New Features
+- [`dce083d`](https://github.com/ietf-tools/xml2rfc/commit/dce083d139f37ee38c82d61f962c9194d5abaa6d) - Add support for Python 3.13 *(PR [#1175](https://github.com/ietf-tools/xml2rfc/pull/1175) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1145](https://github.com/ietf-tools/xml2rfc/issues/1145) opened by [@kesara](https://github.com/kesara)*
+
+### :white_check_mark: Tests
+- [`c8f9b7f`](https://github.com/ietf-tools/xml2rfc/commit/c8f9b7fe40ee0afdfba6e6633cff78e3a97d2b0d) - Add RFC 10k test *(PR [#1180](https://github.com/ietf-tools/xml2rfc/pull/1180) by [@kesara](https://github.com/kesara))*
+
+### :construction_worker: Build System
+- [`ebc2178`](https://github.com/ietf-tools/xml2rfc/commit/ebc21784087818ba60e81b1d2e5f05d489b46029) - Remove OpenPGP keys *(PR [#1162](https://github.com/ietf-tools/xml2rfc/pull/1162) by [@kesara](https://github.com/kesara))*
+- [`2fd70e8`](https://github.com/ietf-tools/xml2rfc/commit/2fd70e8ea00e6a70424fdc8183b251b9893b9d5d) - Enable tests on Windows OS *(PR [#1177](https://github.com/ietf-tools/xml2rfc/pull/1177) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1178](https://github.com/ietf-tools/xml2rfc/issues/1178) opened by [@kesara](https://github.com/kesara)*
+- [`0e8fee4`](https://github.com/ietf-tools/xml2rfc/commit/0e8fee458e8f76a6273e0daaf8cc8b6a6eb33d62) - Run macOS tests on m1 processor *(PR [#1141](https://github.com/ietf-tools/xml2rfc/pull/1141) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1129](https://github.com/ietf-tools/xml2rfc/issues/1129) opened by [@kesara](https://github.com/kesara)*
+
+### :memo: Documentation Changes
+- [`0b4bea0`](https://github.com/ietf-tools/xml2rfc/commit/0b4bea011fd4a91c3f7352ee254e6c81e9749c84) - update CHANGELOG.md + py file versions for v3.23.2 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+### :wrench: Chores
+- [`3f649a3`](https://github.com/ietf-tools/xml2rfc/commit/3f649a3473d3f99425276f54e52ea0260848288e) - **deps**: Bump up lxml to 5.3.0 *(PR [#1173](https://github.com/ietf-tools/xml2rfc/pull/1173) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1070](https://github.com/ietf-tools/xml2rfc/issues/1070) opened by [@kesara](https://github.com/kesara)*
+- [`d36244c`](https://github.com/ietf-tools/xml2rfc/commit/d36244cea222812d0cd33b9f57b813400898d56a) - Remove legacy Dockerfile syntax *(PR [#1176](https://github.com/ietf-tools/xml2rfc/pull/1176) by [@kesara](https://github.com/kesara))*
+
+
+## [v3.23.2] - 2024-10-01
+### :bug: Bug Fixes
+- [`f297f11`](https://github.com/ietf-tools/xml2rfc/commit/f297f115b34dc3c3391410c2c6c06f903daf5937) - **v2v3**: Use bib.ietf.org for I-D xinclude references *(PR [#1166](https://github.com/ietf-tools/xml2rfc/pull/1166) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1008](https://github.com/ietf-tools/xml2rfc/issues/1008) opened by [@ajeanmahoney](https://github.com/ajeanmahoney)*
+- [`83e897f`](https://github.com/ietf-tools/xml2rfc/commit/83e897fe523a84630ec7bfd9805a887128897082) - **text**: Capitalize "type" in non-ASCII artwork message *(PR [#1170](https://github.com/ietf-tools/xml2rfc/pull/1170) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1169](https://github.com/ietf-tools/xml2rfc/issues/1169) opened by [@ajeanmahoney](https://github.com/ajeanmahoney)*
+
+### :memo: Documentation Changes
+- [`29be9c8`](https://github.com/ietf-tools/xml2rfc/commit/29be9c8002ce0313ce5e3ff7b52b582301c4f096) - update CHANGELOG.md + py file versions for v3.23.1 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.23.1] - 2024-09-17
+### :bug: Bug Fixes
+- [`e2b8734`](https://github.com/ietf-tools/xml2rfc/commit/e2b87343c5341d521f3dceb4976fad8054ac7efd) - **text**: Update non-ASCII art text *(PR [#1140](https://github.com/ietf-tools/xml2rfc/pull/1140) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#617](https://github.com/ietf-tools/xml2rfc/issues/617) opened by [@ietf-svn-bot](https://github.com/ietf-svn-bot)*
+
+### :construction_worker: Build System
+- [`3dfb04c`](https://github.com/ietf-tools/xml2rfc/commit/3dfb04cac22302d3c36cc3580e6bab1ec754e337) - Update pydyf version requirement *(PR [#1159](https://github.com/ietf-tools/xml2rfc/pull/1159) by [@kesara](https://github.com/kesara))*
+- [`e589691`](https://github.com/ietf-tools/xml2rfc/commit/e589691629377444c499dcb248ef8fef0f84c6e9) - Remove upload artifacts step *(PR [#1161](https://github.com/ietf-tools/xml2rfc/pull/1161) by [@kesara](https://github.com/kesara))*
+- [`50c3a44`](https://github.com/ietf-tools/xml2rfc/commit/50c3a44a6131258580064ffe437732f2ae3a266b) - Update GHAs *(PR [#1163](https://github.com/ietf-tools/xml2rfc/pull/1163) by [@kesara](https://github.com/kesara))*
+
+### :memo: Documentation Changes
+- [`cbf4137`](https://github.com/ietf-tools/xml2rfc/commit/cbf41377d20295410a09fd8c62fd664632339e7a) - update CHANGELOG.md + py file versions for v3.23.0 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.23.0] - 2024-08-21
+### :sparkles: New Features
+- [`f743092`](https://github.com/ietf-tools/xml2rfc/commit/f7430927ee4d7e8c71bea6b7d76411e5b40cbde5) - Pin WeasyPrint 61.2 *(PR [#1147](https://github.com/ietf-tools/xml2rfc/pull/1147) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1131](https://github.com/ietf-tools/xml2rfc/issues/1131) opened by [@kesara](https://github.com/kesara)*
+
+### :bug: Bug Fixes
+- [`058479b`](https://github.com/ietf-tools/xml2rfc/commit/058479bf3a8ebcc2b37a145edf246c3417ead5e5) - **text**: Render ol and ul inside blockquote correctly *(PR [#1150](https://github.com/ietf-tools/xml2rfc/pull/1150) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1148](https://github.com/ietf-tools/xml2rfc/issues/1148) opened by [@rvanrheenen](https://github.com/rvanrheenen)*
+- [`bdafb27`](https://github.com/ietf-tools/xml2rfc/commit/bdafb274b276e875a6f7c55e1c11f03af902022b) - Add background to tt and code inside dt *(PR [#1144](https://github.com/ietf-tools/xml2rfc/pull/1144) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1142](https://github.com/ietf-tools/xml2rfc/issues/1142) opened by [@ajeanmahoney](https://github.com/ajeanmahoney)*
+
+### :memo: Documentation Changes
+- [`7776234`](https://github.com/ietf-tools/xml2rfc/commit/7776234396bc7b823e81b7d1a08d453f689f0561) - update CHANGELOG.md + py file versions for v3.22.0 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.22.0] - 2024-07-02
+### :sparkles: New Features
+- [`b6391a1`](https://github.com/ietf-tools/xml2rfc/commit/b6391a163dbaba0818f634a33ebafd01a5095b77) - Use fonts from xml2rfc-fonts *(PR [#1124](https://github.com/ietf-tools/xml2rfc/pull/1124) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1030](https://github.com/ietf-tools/xml2rfc/issues/1030) opened by [@kesara](https://github.com/kesara)*
+  - :arrow_lower_right: *addresses issue [#1121](https://github.com/ietf-tools/xml2rfc/issues/1121) opened by [@kesara](https://github.com/kesara)*
+- [`14cf536`](https://github.com/ietf-tools/xml2rfc/commit/14cf53656fb7e7a0115bf224c768b38c502d9476) - Remove dependency on six *(PR [#1134](https://github.com/ietf-tools/xml2rfc/pull/1134) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1130](https://github.com/ietf-tools/xml2rfc/issues/1130) opened by [@kesara](https://github.com/kesara)*
+
+### :bug: Bug Fixes
+- [`7a30635`](https://github.com/ietf-tools/xml2rfc/commit/7a306352588c4ae3ff5826b7d2848016c4e022d6) - Use correct list style for upper case roman *(PR [#1123](https://github.com/ietf-tools/xml2rfc/pull/1123) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1122](https://github.com/ietf-tools/xml2rfc/issues/1122) opened by [@cabo](https://github.com/cabo)*
+
+### :construction_worker: Build System
+- [`a768f39`](https://github.com/ietf-tools/xml2rfc/commit/a768f39ac4c51e24d3d9516407513324b795fa18) - Update CodeQL Action to v2 *(PR [#1132](https://github.com/ietf-tools/xml2rfc/pull/1132) by [@kesara](https://github.com/kesara))*
+
+### :memo: Documentation Changes
+- [`01661ae`](https://github.com/ietf-tools/xml2rfc/commit/01661ae9c88c948586f70c011d372968ffface6b) - update CHANGELOG.md + py file versions for v3.21.0 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.21.0] - 2024-04-08
+### :sparkles: New Features
+- [`ca39326`](https://github.com/ietf-tools/xml2rfc/commit/ca3932629457a441d2a8797a4d28aa42c1521dce) - Validate docName and seriesInfo value for I-D *(PR [#1116](https://github.com/ietf-tools/xml2rfc/pull/1116) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1115](https://github.com/ietf-tools/xml2rfc/issues/1115) opened by [@kesara](https://github.com/kesara)*
+
+### :bug: Bug Fixes
+- [`312b01a`](https://github.com/ietf-tools/xml2rfc/commit/312b01a3a941d1f5a8e16594913051ba2ec8a443) - Avoid breaking citation labels *(PR [#1114](https://github.com/ietf-tools/xml2rfc/pull/1114) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#685](https://github.com/ietf-tools/xml2rfc/issues/685) opened by [@ietf-svn-bot](https://github.com/ietf-svn-bot)*
+
+### :memo: Documentation Changes
+- [`c8e2998`](https://github.com/ietf-tools/xml2rfc/commit/c8e2998d86eaa791277e5479c225634c67661816) - update CHANGELOG.md + py file versions for v3.20.1 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.20.1] - 2024-03-11
+### :bug: Bug Fixes
+- [`f58e052`](https://github.com/ietf-tools/xml2rfc/commit/f58e052ebc5a6b07cd0cd51f82f470a0af8d61bd) - Change non-current year error to a warning *(PR [#1109](https://github.com/ietf-tools/xml2rfc/pull/1109) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#704](https://github.com/ietf-tools/xml2rfc/issues/704) opened by [@ietf-svn-bot](https://github.com/ietf-svn-bot)*
+
+### :white_check_mark: Tests
+- [`a809924`](https://github.com/ietf-tools/xml2rfc/commit/a809924d8ff627bfd0493a3067d0f1780ca5794f) - Fix recursion issue in walkpdf *(PR [#1112](https://github.com/ietf-tools/xml2rfc/pull/1112) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1111](https://github.com/ietf-tools/xml2rfc/issues/1111) opened by [@kitterma](https://github.com/kitterma)*
+
+### :memo: Documentation Changes
+- [`37f406c`](https://github.com/ietf-tools/xml2rfc/commit/37f406c5e1e036eab9162940e563bf349c1bd1b2) - update CHANGELOG.md + py file versions for v3.20.0 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+
+
+## [v3.20.0] - 2024-02-21
+### :sparkles: New Features
+- [`e4542c2`](https://github.com/ietf-tools/xml2rfc/commit/e4542c29e217f09aeca5a0ae423fc45c73dee8a2) - Update subseries presentation *(PR [#1102](https://github.com/ietf-tools/xml2rfc/pull/1102) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *addresses issue [#1100](https://github.com/ietf-tools/xml2rfc/issues/1100) opened by [@ajeanmahoney](https://github.com/ajeanmahoney)*
+
+### :bug: Bug Fixes
+- [`20a5b30`](https://github.com/ietf-tools/xml2rfc/commit/20a5b30d9e08bd21184335fb12918ed0d4fe7c4c) - Allow non-ASCII values in all attributes *(PR [#1106](https://github.com/ietf-tools/xml2rfc/pull/1106) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1105](https://github.com/ietf-tools/xml2rfc/issues/1105) opened by [@cabo](https://github.com/cabo)*
+- [`4278f7b`](https://github.com/ietf-tools/xml2rfc/commit/4278f7b7e0b64293646ac13d0c5dceb946927c5c) - **text**: Don't break URLs in annotation *(PR [#1104](https://github.com/ietf-tools/xml2rfc/pull/1104) by [@kesara](https://github.com/kesara))*
+  - :arrow_lower_right: *fixes issue [#1101](https://github.com/ietf-tools/xml2rfc/issues/1101) opened by [@apaloma-rpc](https://github.com/apaloma-rpc)*
+
+### :construction_worker: Build System
+- [`75971ca`](https://github.com/ietf-tools/xml2rfc/commit/75971ca5d980a7ee90fa25f82720706927750dda) - PyPI publish GHA should not run on push to main branch *(PR [#1107](https://github.com/ietf-tools/xml2rfc/pull/1107) by [@kesara](https://github.com/kesara))*
+
+### :memo: Documentation Changes
+- [`c7dd9a1`](https://github.com/ietf-tools/xml2rfc/commit/c7dd9a1548bffcbcdebf109eb6def1a1f680a085) - update CHANGELOG.md + py file versions for v3.19.4 [skip ci] *(commit by [@kesara](https://github.com/kesara))*
+- [`ec6d921`](https://github.com/ietf-tools/xml2rfc/commit/ec6d92162ba57cd9fb65a5cd91d4e7948c330f7f) - Update CHANGELOG.md *(commit by [@kesara](https://github.com/kesara))*
+
+
 ## [v3.19.4] - 2024-02-06
 
 ### :bug: Bug Fixes
@@ -2185,3 +2468,22 @@ This release fixes all outstanding major bugs, details below. The issue tracker 
 [v3.19.2]: https://github.com/ietf-tools/xml2rfc/compare/v3.19.1...v3.19.2
 [v3.19.3]: https://github.com/ietf-tools/xml2rfc/compare/v3.19.2...v3.19.3
 [v3.19.4]: https://github.com/ietf-tools/xml2rfc/compare/v3.19.3...v3.19.4
+
+[v3.20.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.19.4...v3.20.0
+[v3.20.1]: https://github.com/ietf-tools/xml2rfc/compare/v3.20.0...v3.20.1
+[v3.21.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.20.1...v3.21.0
+[v3.22.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.21.0...v3.22.0
+[v3.23.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.22.0...v3.23.0
+[v3.23.1]: https://github.com/ietf-tools/xml2rfc/compare/v3.23.0...v3.23.1
+[v3.23.2]: https://github.com/ietf-tools/xml2rfc/compare/v3.23.1...v3.23.2
+[v3.24.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.23.2...v3.24.0
+[v3.25.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.24.0...v3.25.0
+[v3.26.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.25.0...v3.26.0
+[v3.27.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.26.0...v3.27.0
+[v3.28.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.27.0...v3.28.0
+[v3.28.1]: https://github.com/ietf-tools/xml2rfc/compare/v3.28.0...v3.28.1
+[v3.29.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.28.1...v3.29.0
+[v3.30.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.29.0...v3.30.0
+[v3.30.1]: https://github.com/ietf-tools/xml2rfc/compare/v3.30.0...v3.30.1
+[v3.30.2]: https://github.com/ietf-tools/xml2rfc/compare/v3.30.1...v3.30.2
+[v3.31.0]: https://github.com/ietf-tools/xml2rfc/compare/v3.30.2...v3.31.0

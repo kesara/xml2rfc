@@ -6,7 +6,6 @@ import copy
 import inspect
 import re
 import sys
-import six
 import textwrap
 
 from codecs import open
@@ -22,7 +21,7 @@ except ImportError:
 
 
 from xml2rfc import strings
-from xml2rfc.writers.base import default_options, BaseV3Writer, RfcWriterError
+from xml2rfc.writers.base import default_options, BaseV3Writer, RfcWriterError, SUBSERIES
 from xml2rfc import utils
 from xml2rfc.uniscripts import is_script
 from xml2rfc.util.date import extract_date, augment_date, get_expiry_date, format_date
@@ -35,6 +34,9 @@ from xml2rfc.util.unicode import expand_unicode_element, textwidth
 from xml2rfc.util.postal import get_normalized_address_info, get_address_format_rules, address_field_mapping
 from xml2rfc.utils import justify_inline, clean_text
 
+
+MAX_WIDTH = 72
+SPLITTER_WIDTH = 67
 
 IndexItem   = namedtuple('indexitem', ['item', 'subitem', 'anchor', 'page', ])
 Joiner      = namedtuple('joiner', ['join', 'indent', 'hang', 'overlap', 'do_outdent'])
@@ -51,7 +53,7 @@ Joiner      = namedtuple('joiner', ['join', 'indent', 'hang', 'overlap', 'do_out
 # We don't use namedtuple for Line, because the resulting objects would be immutable:
 class Line(object):
     def __init__(self, text, elem):
-        assert isinstance(text, six.text_type)
+        assert isinstance(text, str)
         self.text = text
         self.elem = elem
         self.page = None
@@ -80,8 +82,8 @@ class Block(object):
         self.beg  = beg                 # beginning line of block
         self.end  = end                 # ending line of block
 
-wrapper = utils.TextWrapper(width=72)
-splitter = utils.TextSplitter(width=67)
+wrapper = utils.TextWrapper(width=MAX_WIDTH)
+splitter = utils.TextSplitter(width=SPLITTER_WIDTH)
 seen = set()
 
 # This is not a complete list of whitespace characters, and isn't intended to be.  It's
@@ -174,7 +176,7 @@ def align(lines, how, width):
     return lines
 
 def mklines(arg, e):
-    if isinstance(arg, six.text_type):
+    if isinstance(arg, str):
         # \u2028 and \u2029 are eliminated here, through splitlines()
         lines = [ Line(t, e) for t in arg.splitlines() ]
     else:
@@ -182,14 +184,14 @@ def mklines(arg, e):
     return lines
 
 def mktextblock(arg):
-    if isinstance(arg, six.text_type):
+    if isinstance(arg, str):
         text = arg
     else:
         text = '\u2028'.join([ l.text for l in arg ])
     return text
 
 def mktext(arg):
-    if isinstance(arg, six.text_type):
+    if isinstance(arg, str):
         text = arg
     else:
         text = '\n'.join([ l.text for l in arg ])
@@ -299,7 +301,7 @@ class TextWriter(BaseV3Writer):
             joiners = base_joiners
             if self.options.pagination:
                 self.add_pageno_placeholders()
-            lines = self.render(self.root, width=72, joiners=joiners)
+            lines = self.render(self.root, width=MAX_WIDTH, joiners=joiners)
 
             if self.options.pagination:
                 lines = findblocks(lines)
@@ -310,19 +312,13 @@ class TextWriter(BaseV3Writer):
                     tag  = l.elem.tag  if l.elem!=None else '-'
                     page = l.elem.page if l.elem!=None else '-'
                     if l.block:
-                        if six.PY2:
-                            sys.stderr.write(("%3d %10s %3d-%3d [%4s] %s\n" % (i, tag, l.block.beg, l.block.end, page, l.text)).encode('utf8'))
-                        else:
-                            sys.stderr.write(("%3d %10s %3d-%3d [%4s] %s\n" % (i, tag, l.block.beg, l.block.end, page, l.text)))
+                        sys.stderr.write(("%3d %10s %3d-%3d [%4s] %s\n" % (i, tag, l.block.beg, l.block.end, page, l.text)))
                     else:
-                        if six.PY2:
-                            sys.stderr.write(("%3d %10s         [%4s] %s\n" % (i, tag,                           page, l.text)).encode('utf8'))
-                        else:
-                            sys.stderr.write(("%3d %10s         [%4s] %s\n" % (i, tag,                           page, l.text)))
+                        sys.stderr.write(("%3d %10s         [%4s] %s\n" % (i, tag,                           page, l.text)))
             for i, l in enumerate(lines):
                 length = len(l.text)
-                if length > 72:
-                    self.warn(l.elem, "Too long line found (L%s), %s characters longer than 72 characters: \n%s" %(i+1, length-72, l.text))
+                if length > MAX_WIDTH:
+                    self.warn(l.elem, f"Too long line found (L{i + 1}), {length - MAX_WIDTH} characters longer than {MAX_WIDTH} characters: \n{l.text}")
 
             text = ('\n'.join( l.text for l in lines )).rstrip(stripspace) + '\n'
 
@@ -505,7 +501,7 @@ class TextWriter(BaseV3Writer):
             else:
                 pass
         # new toc, to be used to replace the old one
-        toclines = self.render(toc, width=72, joiners=base_joiners)
+        toclines = self.render(toc, width=MAX_WIDTH, joiners=base_joiners)
         if toc_start and toc_end:
             j = 2
             for i in range(toc_start+2, toc_end):
@@ -522,7 +518,7 @@ class TextWriter(BaseV3Writer):
         Render element e, then format and join it to text using the
         appropriate settings in joiners.
         '''
-        assert isinstance(text, six.text_type)
+        assert isinstance(text, str)
         joiners = kwargs['joiners']
         j = joiners[e.tag] if e.tag in joiners else joiners[None]
         width -= j.indent + j.hang
@@ -659,13 +655,11 @@ class TextWriter(BaseV3Writer):
 
     def quote_renderer(self, e, width, prefix, by, cite, **kwargs):
         set_joiners(kwargs, {
-            None:      Joiner('\n', 0, 0, False, False),
+            None:      Joiner('\n\n', 0, 0, False, False),
             't':       Joiner('\n\n', 0, 0, False, False),
             'artset':   Joiner('\n\n', 0, 0, False, False),
             'artwork':  Joiner('\n\n', 3, 0, False, True),
             'sourcecode':  Joiner('\n\n', 3, 0, False, False),
-            'ul':  Joiner('\n\n', 0, 0, False, False),
-            'ol':  Joiner('\n\n', 0, 0, False, False),
         })
         width = width if width else 69
         text, plain = self.text_or_block_renderer(e, width-3, **kwargs)
@@ -815,10 +809,14 @@ class TextWriter(BaseV3Writer):
         return lines
 
     def render_artwork(self, e, width, **kwargs):
-        msg  = ( "(Artwork only available as %s: %s)"
-                    % ( e.get('type', '(unknown type)'),
-                        e.get('originalSrc') or e.get('src') or 'No external link available, see %s.html for artwork.'%self.root.get('docName')))
-        msg  = fill(msg, width=width, **kwargs)
+        artwork_url = (
+            f"{self.options.rfc_html_archive_url}rfc{self.root.get('number')}.html"
+            if self.options.rfc
+            else f"{self.options.id_html_archive_url}{self.root.get('docName')}.html"
+        )
+        artwork_type = e.get("type", "").upper() or "(unknown type)"
+        msg  = f"(Artwork only available as {artwork_type}: see {artwork_url})"
+        msg  = fill(msg, width=width, keep_url=True, **kwargs)
 #        text = (e.text.strip(stripspace) and e.text.expandtabs()) or msg
 #         text = text.strip('\n')
 #         text = '\n'.join( [ l.rstrip(stripspace) for l in text.split('\n') ] )
@@ -1499,6 +1497,7 @@ class TextWriter(BaseV3Writer):
                 'artset',
                 'artwork',
                 'aside',
+                'blockquote',
                 'figure',
                 'ol',
                 'sourcecode',
@@ -1811,7 +1810,7 @@ class TextWriter(BaseV3Writer):
                 textwidth_l = textwidth(l)
                 textwidth_r = textwidth(r)
                 #assert textwidth_l+textwidth_r< 70
-                w = 72-textwidth_l-textwidth_r
+                w = MAX_WIDTH-textwidth_l-textwidth_r
                 lines.append(l+' '*w+r)
             return '\n'.join(lines).rstrip(stripspace)+'\n'
         #
@@ -1819,7 +1818,7 @@ class TextWriter(BaseV3Writer):
             line = '%s%s%s' % (label, items, suffix)
             ll = len(left)
             lr = len(right)
-            width = 48 if ll >= lr else min(48, 72-4-len(right[ll]))
+            width = 48 if ll >= lr else min(48, MAX_WIDTH-4-len(right[ll]))
             wrapper = textwrap.TextWrapper(width=width, subsequent_indent=' '*len(label))
             return wrapper.wrap(line)
         #
@@ -2725,16 +2724,12 @@ class TextWriter(BaseV3Writer):
         elements = []
         for ctag in ('title', 'refcontent', 'stream', 'seriesInfo', 'date',):
             for c in e.iterdescendants(ctag):
-                if p.tag == 'referencegroup' and c.tag == 'seriesInfo' and c.get('name') == 'DOI':
-                    # Don't render DOI within a reference group
-                    continue              
                 elements.append(c)
-        if p.tag != 'referencegroup':
-            target = e.get('target')
-            if target:
-                url = self.element('refcontent')
-                url.text = '<%s>' % target
-                elements.append(url)
+        target = e.get('target')
+        if target:
+            url = self.element('refcontent')
+            url.text = '<%s>' % target
+            elements.append(url)
         set_joiners(kwargs, {
             None:           Joiner(', ', 0, 0, False, False),
             'annotation':   Joiner('  ', 0, 0, False, False),
@@ -2746,7 +2741,8 @@ class TextWriter(BaseV3Writer):
         text += '.'
         for ctag in ('annotation', ):
             for c in e.iterdescendants(ctag):
-                text = self.tjoin(text, c, width, **kwargs)
+                # use MAX_WIDTH here since text gets formatted later
+                text = self.tjoin(text, c, MAX_WIDTH, keep_url=True, **kwargs)
         text = fill(text, width=width, fix_sentence_endings=False, keep_url=True, **kwargs).lstrip(stripspace)
         
         text = indent(text, 11, 0)
@@ -2789,10 +2785,33 @@ class TextWriter(BaseV3Writer):
         label = self.refname_mapping[e.get('anchor')]
         label = ('[%s]' % label).ljust(11)
         lines = []
+        target = e.get('target')
+        subseries = False
+        for series in e.xpath('.//seriesInfo'):
+            if series.get('name') in SUBSERIES.keys():
+                kwargs['joiners'].update({
+                    None:   Joiner(', ', 11, 0, False, False),
+                    't':    Joiner('\n', 11, 0, False, False),
+                })
+                text = f"{SUBSERIES[series.get('name')]} {series.get('value')}"
+                if target:
+                    url = self.element('refcontent')
+                    url.text = f'<{target}>.'
+                    text = self.tjoin(text, url, width, **kwargs)
+                else:
+                    text += '.'
+                subseries_width = width - 11
+                text = fill(text, width=subseries_width, fix_sentence_endings=False, keep_url=True, **kwargs).lstrip(stripspace)
+                text = indent(text, 11, 0)
+                lines = mklines(text, e)
+                t = self.element('t')
+                t.text = f"At the time of writing, this {series.get('name')} comprises the following:"
+                lines = self.ljoin(lines, t, width, **kwargs)
+                subseries = True
+                break
         for c in e.getchildren():
             lines = self.ljoin(lines, c, width, **kwargs)
-        target = e.get('target')
-        if target:
+        if target and not subseries:
             t = self.element('t')
             t.text = '<%s>' % target
             lines = self.ljoin(lines, t, width, **kwargs)
@@ -3769,7 +3788,7 @@ class TextWriter(BaseV3Writer):
             text = fill(text, width=width, **kwargs)
             lines = mklines(text, e)
         else:
-            if isinstance(text, six.binary_type):
+            if isinstance(text, bytes):
                 text = text.decode('utf-8')
             lines = [ Line(text, e) ]
         return lines
@@ -3957,7 +3976,7 @@ class TextWriter(BaseV3Writer):
             Find the minimum column widths of regular cells
             """
             i = 0
-            splitter = utils.TextSplitter(width=67, hyphen_split=hyphen_split)
+            splitter = utils.TextSplitter(width=SPLITTER_WIDTH, hyphen_split=hyphen_split)
             for p in e.iterchildren(['thead', 'tbody', 'tfoot']):
                 for r in list(p.iterchildren('tr')):
                     j = 0
@@ -4161,7 +4180,7 @@ class TextWriter(BaseV3Writer):
                 k, l = cell.origin
                 hspan = cell.rowspan+k-i if cell.rowspan else minspan
                 lines = len(cell.wrapped) if cell.wrapped else 0
-                if hspan == minspan and lines > maxlines:
+                if lines > maxlines:
                     maxlines = lines
             for j in range(cols):
                 cells[i][j].lines = maxlines

@@ -41,27 +41,20 @@ class PdfWriter(BaseV3Writer):
 
         logging.basicConfig(level=logging.INFO)
 
-        # Weasyprint logger
-        wplogger = logging.getLogger('weasyprint')
-        if   self.options.quiet:
-            wplogger.setLevel(logging.CRITICAL)
-        elif self.options.verbose:
-            wplogger.setLevel(logging.WARNING)
-        elif self.options.debug:
-            wplogger.setLevel(logging.DEBUG)
-        else:
-            wplogger.setLevel(logging.ERROR)
-
-        # fontTools logger
-        ftlogger = logging.getLogger('fontTools')
-        if self.options.quiet:
-            ftlogger.setLevel(logging.CRITICAL)
-        elif self.options.verbose:
-            ftlogger.setLevel(logging.WARNING)
-        elif self.options.debug:
-            ftlogger.setLevel(logging.DEBUG)
-        else:
-            ftlogger.setLevel(logging.ERROR)
+        loggers = []
+        loggers.append(logging.getLogger("weasyprint"))
+        loggers.append(logging.getLogger("fontTools.subset"))
+        loggers.append(logging.getLogger("fontTools.ttLib"))
+        loggers.append(logging.getLogger("fontTools.varlib"))
+        for _logger in loggers:
+            if   self.options.quiet:
+                _logger.setLevel(logging.CRITICAL)
+            elif self.options.verbose:
+                _logger.setLevel(logging.WARNING)
+            elif self.options.debug:
+                _logger.setLevel(logging.DEBUG)
+            else:
+                _logger.setLevel(logging.ERROR)
 
     def pdf(self):
         if not weasyprint:
@@ -74,7 +67,6 @@ class PdfWriter(BaseV3Writer):
             self.root = self.tree.getroot()
 
         self.options.no_css = True
-        self.options.image_svg = True
         self.options.pdf = True
         self.options.attach_xml = True
         htmlwriter = HtmlWriter(self.xmlrfc, quiet=True, options=self.options, date=self.date)
@@ -141,10 +133,11 @@ class PdfWriter(BaseV3Writer):
         fonts = set()
         scripts = self.root.get('scripts').split(',')
         roboto_mono = "Roboto Mono"
+        noto_sans_mono = "Noto Sans Mono"
         for script in scripts:
             family = get_noto_serif_family_for_script(script)
             fonts.add("%s" % family)
-        fonts = [ roboto_mono, ] + NOTO_SYMBOLS + list(fonts)
+        fonts = [ roboto_mono, noto_sans_mono, ] + NOTO_SYMBOLS + list(fonts)
         self.note(None, "Found installed font: %s" % ', '.join(fonts))
         return fonts
 
@@ -166,6 +159,9 @@ page_css_template = """
   }}
   tt, code, pre {{
     font-family: {mono-fonts};
+  }}
+  sup {{
+    line-height: 0;
   }}
   @page {{
     size: A4;

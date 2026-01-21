@@ -25,8 +25,7 @@ libversion_regex = \(pyflakes\|PyYAML\|requests\|setuptools\|six\|Weasyprint\) [
 
 rfcxml= \
 	rfc7911.xml		\
-#	rfc6787.xml		\
-#	rfc7754.edited.xml	\
+	rfc99999.xml	\
 
 rfcxmlfiles = $(addprefix tests/input/, $(rfcxml))
 rfctxt      = $(addsuffix .txt, $(basename $(rfcxml)))
@@ -47,7 +46,7 @@ drafttests    = $(addprefix tests/out/, $(drafttest))
 
 pyfiles  = $(wildcard  xml2rfc/*.py) $(wildcard  xml2rfc/writers/*.py)
 
-.PHONY: tests tests-no-network
+.PHONY: clear-cache configtest install installtestdeps flaketest pytests tests tests-no-network yes yestests
 
 # All tests
 tests: minify tests-no-network cachetest
@@ -56,7 +55,6 @@ tests: minify tests-no-network cachetest
 tests-no-network: test flaketest drafttest old-drafttest rfctest utf8test v3featuretest elementstest indextest sourcecodetest notoctest bomtest wiptest mantest
 
 # Clear the cache
-.PHONY: clear-cache
 clear-cache: install
 	@echo -e "\n Clearing cache ..."
 	@PS4=" " /bin/bash -cx "xml2rfc --skip-config --cache \"$${IETF_TEST_CACHE_PATH}\" --clear-cache"
@@ -64,13 +62,17 @@ clear-cache: install
 env/bin/python:
 	echo "Install virtualenv in $$PWD/env/ in order to run tests locally."
 
-.PHONY: install
 install:
 	python3 --version
 	python3 -m pip install . --quiet
 	rm -rf xml2rfc.egg-info/
 
-test:	install flaketest xml2rfc/data/v3.rng pytests configtest
+installtestdeps:
+	python3 --version
+	python3 -m pip install .[tests] --quiet
+	rm -rf xml2rfc.egg-info/
+
+test: installtestdeps flaketest xml2rfc/data/v3.rng configtest pytests
 
 flaketest:
 	pyflakes xml2rfc
@@ -79,7 +81,7 @@ flaketest:
 configtest:
 	python3 configtest.py
 
-pytests:
+pytests: installtestdeps
 	python3 test.py --verbose
 
 CHECKOUTPUT=	\
@@ -96,7 +98,7 @@ CHECKOUTPUT=	\
 %.rng: %.rnc
 	trang $< $@
 
-%.tests: %.txt.test %.html.test %.exp.xml.test %.v2v3.xml.test %.v3add-xinclude.xml.test %.text.test %.pages.text.test %.v3.html.test %.prepped.xml.test %.plain.text
+%.tests: %.txt.test %.html.test %.exp.xml.test %.v2v3.xml.test %.v3add-xinclude.xml.test %.v3add-xinclude-w-revision.xml.test %.text.test %.pages.text.test %.v3.html.test %.prepped.xml.test %.plain.text
 	@echo " Checking v3 validity"
 	@doc=$(basename $@); printf ' '; xmllint --noout --relaxng xml2rfc/data/v3.rng $$doc.prepped.xml
 	@echo " Diffing .plain.text against regular .text"
@@ -117,8 +119,11 @@ tests/out/%.v2v3.xml: tests/input/%.xml install
 	@doc=$(basename $@); printf ' '; xmllint --noout --xinclude --relaxng xml2rfc/data/v3.rng $$doc.xml
 	@PS4=" " /bin/bash -cx "xml2rfc --skip-config --allow-local-file-access --cache \"$${IETF_TEST_CACHE_PATH}\" --no-network --v2v3 --strict --legacy-date-format --add-xinclude $< --out $@"
 
-tests/out/%.v3add-xinclude.xml: tests/input/draft-miek-test.v3.xml install
+tests/out/%.v3add-xinclude.xml: tests/input/draft-miek-test-v3.xml install
 	@PS4=" " /bin/bash -cx "xml2rfc --skip-config --allow-local-file-access --cache \"$${IETF_TEST_CACHE_PATH}\" --no-network --v2v3 --add-xinclude $< --out $@"
+
+tests/out/%.v3add-xinclude-w-revision.xml: tests/input/draft-template.xml install
+	@PS4=" " /bin/bash -cx "xml2rfc --skip-config --allow-local-file-access --cache \"$${IETF_TEST_CACHE_PATH}\" --no-network --v2v3 --add-xinclude --draft-revisions $< --out $@"
 
 tests/out/%.prepped.xml: tests/input/%.xml tests/out/%.v3.html tests/out/%.text install
 	@PS4=" " /bin/bash -cx "xml2rfc --skip-config --allow-local-file-access --cache \"$${IETF_TEST_CACHE_PATH}\" --no-network --out $@ --prep $<"

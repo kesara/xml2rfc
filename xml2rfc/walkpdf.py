@@ -15,14 +15,14 @@ import sys
 def walk(obj, seen):
     dobj = {}                            # Direct objects
     iobj = []                            # Indirect objects
-    if hasattr(obj, 'keys'):
+    if isinstance(obj, pypdf.generic.DictionaryObject):
         for key in obj.keys():
             k = key[1:] if key.startswith('/') else key
             d, i = walk(obj[key], seen)
             dobj[k] = d
             iobj += i
         if hasattr(obj, 'extract_text'):
-            dobj['text'] = obj.extract_text()
+            dobj['text'] = obj.extract_text(extraction_mode="layout")
     elif isinstance(obj, pypdf.generic.ArrayObject):
         dobj = []
         for o in obj:

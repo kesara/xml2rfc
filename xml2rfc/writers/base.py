@@ -7,7 +7,6 @@ import codecs
 import copy
 import datetime
 import textwrap
-import lxml
 import os
 import re
 import xml2rfc.log
@@ -26,10 +25,17 @@ except ImportError:
 
 from xml2rfc import strings, log
 from xml2rfc.util.date import extract_date, augment_date, format_date, get_expiry_date
+from xml2rfc.util.file import can_access, FileAccessError
 from xml2rfc.util.name import short_author_ascii_name_parts, full_author_name_expansion, short_author_name_parts
 from xml2rfc.util.unicode import is_svg
-from xml2rfc.utils import namespaces, find_duplicate_ids, slugify
+from xml2rfc.utils import find_duplicate_ids, namespaces, slugify
 
+
+SUBSERIES = {
+        'STD': 'Internet Standard',
+        'BCP': 'Best Current Practice',
+        'FYI': 'For Your Information',
+}
 
 DEADLY_ERRORS = [
     'Element svg has extra content: script',
@@ -69,11 +75,12 @@ default_options.__dict__ = {
         'first_page_author_org': True,
         'html': False,
         'id_base_url': 'https://datatracker.ietf.org/doc/html/',
+        'id_html_archive_url': 'https://www.ietf.org/archive/id/',
         'id_reference_base_url': 'https://datatracker.ietf.org/doc/html/',
         'id_is_work_in_progress': True,
-        'image_svg': False,
         'indent': 2,
         'info': False,
+        'info_base_url': 'https://www.rfc-editor.org/info/',
         'inline_version_info': True,
         'legacy': False,
         'legacy_date_format': False,
@@ -99,6 +106,7 @@ default_options.__dict__ = {
         'raw': False,
         'rfc': None,
         'rfc_base_url': 'https://www.rfc-editor.org/rfc/',
+        'rfc_html_archive_url': 'https://www.rfc-editor.org/rfc/',
         'rfc_local': True,
         'rfc_reference_base_url': 'https://rfc-editor.org/rfc/',
         'silence': default_silenced_messages,
@@ -110,6 +118,7 @@ default_options.__dict__ = {
         'template_dir': os.path.join(os.path.dirname(os.path.dirname(__file__)), 'templates'),
         'text': True,
         'unprep': False,
+        'use_bib': False,
         'utf8': False,
         'values': False,
         'verbose': False,
@@ -1051,7 +1060,7 @@ class BaseRfcWriter:
         p_count = 1  # Paragraph counter
         for element in section:
             # Check for a PI
-            if element.tag is lxml.etree.PI:
+            if element.tag is etree.PI:
                 pidict = self.parse_pi(element)
                 if pidict and "needLines" in pidict:
                     self.needLines(pidict["needLines"])
@@ -1291,7 +1300,7 @@ class BaseRfcWriter:
                     if 'anchor' in ref.attrib:
                         self._indexRef(ref_counter, title=title.text, anchor=ref.attrib["anchor"])
                     else:
-                        raise RfcWriterError("Reference is missing an anchor: %s" % lxml.etree.tostring(ref))
+                        raise RfcWriterError("Reference is missing an anchor: %s" % etree.tostring(ref))
                         
         # Appendix sections
         back = self.r.find('back')
@@ -1640,7 +1649,7 @@ deprecated_attributes = [
 
 v3_rnc_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'v3.rnc')
 v3_rng_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'v3.rng')
-v3_schema = lxml.etree.ElementTree(file=v3_rng_file)
+v3_schema = etree.ElementTree(file=v3_rng_file)
 
 def get_element_tags():
     tags = set()
@@ -1719,7 +1728,6 @@ xref_tags   = get_xref_tags()
 class BaseV3Writer(object):
 
     def __init__(self, xmlrfc, quiet=None, options=default_options, date=None):
-        global v3_rnc_file, v3_rng_file, v3_schema
         self.xmlrfc = xmlrfc
         self.tree = xmlrfc.tree if xmlrfc else None
         self.root = self.tree.getroot() if xmlrfc else None
@@ -1727,7 +1735,7 @@ class BaseV3Writer(object):
         self.date = date if date is not None else datetime.date.today()
         self.v3_rnc_file = v3_rnc_file
         self.v3_rng_file = v3_rng_file
-        self.v3_rng = lxml.etree.RelaxNG(file=self.v3_rng_file)
+        self.v3_rng = etree.RelaxNG(file=self.v3_rng_file)
         self.v3_schema = v3_schema
         self.schema = v3_schema
         self.index_items = []
@@ -1774,21 +1782,21 @@ class BaseV3Writer(object):
         if e != None:
             # directly inside element
             for c in e.getchildren():
-                if c.tag == lxml.etree.PI and c.target == xml2rfc.V3_PI_TARGET:
+                if c.tag == etree.PI and c.target == xml2rfc.V3_PI_TARGET:
                     pis.append(c)
             # siblings before element
             for s in e.itersiblings(preceding=True):
-                if s.tag == lxml.etree.PI and s.target == xml2rfc.V3_PI_TARGET:
+                if s.tag == etree.PI and s.target == xml2rfc.V3_PI_TARGET:
                     pis.append(s)
             # ancestor's earlier siblings
             for a in e.iterancestors():
                 for s in a.itersiblings(preceding=True):
-                    if s.tag == lxml.etree.PI and s.target == xml2rfc.V3_PI_TARGET:
+                    if s.tag == etree.PI and s.target == xml2rfc.V3_PI_TARGET:
                         pis.append(s)
             # before root elements
             p = self.root.getprevious()
             while p != None:
-                if p.tag == lxml.etree.PI and p.target == xml2rfc.V3_PI_TARGET:
+                if p.tag == etree.PI and p.target == xml2rfc.V3_PI_TARGET:
                     pis.append(p)
                 p = p.getprevious()
         return pis
@@ -1796,7 +1804,7 @@ class BaseV3Writer(object):
     def get_relevant_pi(self, e, name):
         pis = self.get_relevant_pis(e)
         pi_list = list(filter(None, [ pi.get(name) for pi in pis ]))
-        return pi_list[-1] if pi_list else None
+        return pi_list[0] if pi_list else None
 
     def silenced(self, e, text):
         text = text.strip()
@@ -1821,7 +1829,7 @@ class BaseV3Writer(object):
                 self.log(self.msg(e, label, text))
 
     def warn(self, e, text, label='Warning:'):
-        if self.options.verbose or not self.silenced(e, text):
+        if self.options.verbose or not (self.silenced(e, text) or self.options.quiet):
             self.log(self.msg(e, label, text))
 
     def err(self, e, text, trace=False):
@@ -1848,8 +1856,7 @@ class BaseV3Writer(object):
         #    xml:base attribute).  The tool may be configurable with a limit on
         #    the depth of recursion.
         try:
-            if not self.options.allow_local_file_access:
-                self.check_includes()
+            self.check_includes()
             self.tree.xinclude()
         except etree.XIncludeError as e:
             self.die(None, "XInclude processing failed: %s" % e)
@@ -1861,8 +1868,10 @@ class BaseV3Writer(object):
         for xinclude in xincludes:
             href = urlparse(xinclude.get('href'))
             if not href.netloc or href.scheme == 'file':
-                error = 'XInclude processing failed: Can not access local file: {}'.format(xinclude.get('href'))
-                self.die(None, error)
+                try:
+                    can_access(self.options, self.xmlrfc.source, href.path)
+                except FileAccessError as error:
+                    self.die(None, error)
 
     def remove_dtd(self):
         # 
@@ -2039,9 +2048,9 @@ class BaseV3Writer(object):
         ind = self.options.indent
         ## The actual printing is done in self.write()
         def indent(e, i):
-            if e.tag in (lxml.etree.CDATA, ):
+            if e.tag in (etree.CDATA, ):
                 return
-            if e.tag in (lxml.etree.Comment, lxml.etree.PI, ):
+            if e.tag in (etree.Comment, etree.PI, ):
                 if not e.tail:
                     if e.getnext() != None:
                         e.tail = '\n'+' '*i
@@ -2122,13 +2131,6 @@ class BaseV3Writer(object):
             self.v3_rng.assertValid(tree)
             return True
         except Exception as e:
-            lxmlver = lxml.etree.LXML_VERSION[:3]
-            if lxmlver < (3, 8, 0):
-                self.warn(None, "The available version of the lxml library (%s) does not provide xpath "
-                          "information as part of validation errors.  Upgrade to version 3.8.0 or "
-                          "higher for better error messages." % ('.'.join(str(v) for v in lxmlver), ))
-            # These warnings are occasionally incorrect -- disable this
-            # output for now:
             deadly = False
             if hasattr(e, 'error_log'):
                 for error in e.error_log:
@@ -2159,6 +2161,19 @@ class BaseV3Writer(object):
             self.die(self.root, 'Expected <rfc> version="3", but found "%s"' % version)
         if not self.validate('before'):
             self.note(None, "Schema validation failed for input document")
+
+        self.validate_draft_name()
+
+    def validate_draft_name(self):
+        if not self.root.attrib.get('number', False):
+            docName = self.root.attrib.get('docName', None)
+            info = self.root.find('./front/seriesInfo[@name="Internet-Draft"]')
+            si_draft_name = info.get('value') if info != None else None
+
+            if all([docName, si_draft_name]) and docName != si_draft_name:
+                self.die(self.root, 'docName and value in <seriesInfo name="Internet-Draft" ..> must match.')
+
+        return True
 
     def validate_after(self, e, p):
         # XXX: There is an issue with exponential increase in validation time

@@ -1,60 +1,50 @@
 name: Publish Python Package
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - xml2rc/**
-      - requirements.txt
-      - setup.cfg
-      - setup.py
-      - test.py
-    tags:
-      - 'v*'
-
   workflow_dispatch:
     inputs:
-      publish:
+      publish_release:
         description: 'Create Production Release'
         required: true
         type: boolean
 
 jobs:
-  publish:
-    environment: release
+  build:
+    name: Build distribution 📦
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
-      packages: write
     outputs:
       pkg_version: ${{ steps.semver.outputs.next }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
+        persist-credentials: false
         fetch-depth: 0
-        
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
     - name: Get Next Version
-      if: ${{ github.event.inputs.publish }}
+      if: ${{ inputs.publish_release }}
       id: semver
       uses: ietf-tools/semver-action@v1
       with:
         patchList: fix, bugfix, perf, refactor, test, tests, chore, revert
         token: ${{ github.token }}
         branch: main
-        
+
     - name: Set Next Version Env Var
-      if: ${{ github.event.inputs.publish }}
+      if: ${{ inputs.publish_release }}
       env:
         NEXT_VERSION: ${{ steps.semver.outputs.next }}
       run: |
         echo "NEXT_VERSION=$next" >> $GITHUB_ENV
-        
+
     - name: Create Draft Release
       uses: ncipollo/release-action@v1
-      if: ${{ github.event.inputs.publish }}
+      if: ${{ inputs.publish_release }}
       with:
         prerelease: true
         draft: false
@@ -63,68 +53,125 @@ jobs:
         name: ${{ env.NEXT_VERSION }}
         body: '*pending*'
         token: ${{ secrets.GITHUB_TOKEN }}
-    
+
     - name: Set Build Variables
       run: |
         if [[ $NEXT_VERSION ]]; then
           echo "Using AUTO SEMVER mode: $NEXT_VERSION"
-          echo "SHOULD_DEPLOY=true" >> $GITHUB_ENV
           echo "PKG_VERSION=$NEXT_VERSION" >> $GITHUB_ENV
           echo "PKG_VERSION_STRICT=${NEXT_VERSION#?}" >> $GITHUB_ENV
         elif [[ "$GITHUB_REF" =~ ^refs/tags/v* ]]; then
           echo "Using TAG mode: $GITHUB_REF_NAME"
-          echo "SHOULD_DEPLOY=true" >> $GITHUB_ENV
           echo "PKG_VERSION=$GITHUB_REF_NAME" >> $GITHUB_ENV
           echo "PKG_VERSION_STRICT=${GITHUB_REF_NAME#?}" >> $GITHUB_ENV
         else
           echo "Using TEST mode: v3.0.0-dev.$GITHUB_RUN_NUMBER"
-          echo "SHOULD_DEPLOY=false" >> $GITHUB_ENV
           echo "PKG_VERSION=v3.0.0-dev.$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
           echo "PKG_VERSION_STRICT=3.0.0-dev.$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
         fi
-    
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-        
-    - name: Install Python dependencies
-      env:
-        DEBIAN_FRONTEND: noninteractive
+
+    - name: Install pypa/build
+      run: >-
+        python3 -m
+        pip install
+        build
+        setuptools
+        --user
+
+    - name: Build a binary wheel and a source tarball
       run: |
-        python -m venv venv
-        source venv/bin/activate
-        python -m pip install --upgrade pip setuptools wheel twine build
-        sudo apt update
-        sudo apt install -y twine
-        
-    - name: Build Python package
-      run: |
-        source venv/bin/activate
         echo "Using version $PKG_VERSION_STRICT"
         sed -i -r -e "s/^__version__ += '.*'$/__version__ = '$PKG_VERSION_STRICT'/" xml2rfc/__init__.py
-        python -m build --sdist
+        python3 -m build
+
+    - name: Store the distribution packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Store updated init file
+      uses: actions/upload-artifact@v4
+      with:
+        name: xml2rfc-init
+        path: xml2rfc/__init__.py
+
+  publish-to-pypi:
+    name: >-
+      Publish Python 🐍 distribution 📦 to PyPI
+    needs:
+    - build
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://pypi.org/p/xml2rfc
+    permissions:
+      id-token: write
+    if: ${{ inputs.publish_release }}
+
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    name: >-
+      Sign the Python 🐍 distribution 📦 with Sigstore
+      and upload them to GitHub Release
+    needs:
+    - build
+    - publish-to-pypi
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Download updated init file
+      uses: actions/download-artifact@v4
+      with:
+        name: xml2rfc-init
+        path: xml2rfc/
+        merge-multiple: true
+
+    - name: Set Variables
+      run: echo "PKG_VERSION=${{needs.build.outputs.pkg_version}}" >> $GITHUB_ENV
 
     - name: Update CHANGELOG
       id: changelog
       uses: Requarks/changelog-action@v1
-      if: env.SHOULD_DEPLOY == 'true'
       with:
         token: ${{ github.token }}
         tag: ${{ env.PKG_VERSION }}
         excludeTypes: ''
 
-    - name: Commit CHANGELOG.md
-      uses: stefanzweifel/git-auto-commit-action@v4
-      if: env.SHOULD_DEPLOY == 'true'
+    - name: Sign the dists with Sigstore
+      uses: sigstore/gh-action-sigstore-python@v3.0.0
       with:
-        branch: main
-        commit_message: 'docs: update CHANGELOG.md + py file versions for ${{ env.PKG_VERSION }} [skip ci]'
-        file_pattern: CHANGELOG.md setup.cfg xml2rfc/__init__.py
-        
+        inputs: >-
+          ./dist/*.tar.gz
+          ./dist/*.whl
+
     - name: Create Release
       uses: ncipollo/release-action@v1
-      if: env.SHOULD_DEPLOY == 'true'
       with:
         allowUpdates: true
         draft: false
@@ -134,54 +181,104 @@ jobs:
         artifacts: "dist/**"
         token: ${{ secrets.GITHUB_TOKEN }}
         makeLatest: true
-        
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2.3.1
-      with:
-        name: artifacts
-        path: |
-          CHANGELOG.md
-          setup.cfg
-          xml2rfc/__init__.py
 
-    - name: Publish to Test PyPI
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        commit-message: 'docs: update CHANGELOG.md + py file versions for ${{ env.PKG_VERSION }} [skip ci]'
+
+  publish-to-testpypi:
+    name: Publish Python 🐍 distribution 📦 to TestPyPI
+    needs:
+    - build
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://test.pypi.org/p/xml2rfc
+    permissions:
+      id-token: write
+
+    steps:
+    - name: Download all the dists
+      uses: actions/download-artifact@v4
+      with:
+        name: python-package-distributions
+        path: dist/
+
+    - name: Publish distribution 📦 to TestPyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         repository-url: https://test.pypi.org/legacy/
 
-    - name: Publish to PyPI
-      if: env.SHOULD_DEPLOY == 'true'
-      uses: pypa/gh-action-pypi-publish@release/v1
-
   build-base:
     runs-on: ubuntu-latest
-    if: github.event.inputs.publish
-    needs: [publish]
+    if: ${{ inputs.publish_release }}
+    needs:
+    - github-release
     permissions:
       contents: read
       packages: write
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-    
+      uses: docker/setup-qemu-action@v3
+
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      uses: docker/setup-buildx-action@v3
 
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Docker Build & Push
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v6
       with:
         context: .
         file: docker/base.Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
         tags: ghcr.io/ietf-tools/xml2rfc-base:latest
+
+  build-slim:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.publish_release }}
+    needs:
+    - github-release
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Set Variables
+      run: echo "PKG_VERSION=${{needs.github-release.outputs.pkg_version}}" >> $GITHUB_ENV
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Docker Build & Push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: docker/slim.Dockerfile
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          ghcr.io/ietf-tools/xml2rfc-slim:latest
+          ghcr.io/ietf-tools/xml2rfc-slim:${{ env.PKG_VERSION }}
