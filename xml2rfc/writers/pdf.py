@@ -1,6 +1,7 @@
 # Copyright The IETF Trust 2018, All Rights Reserved
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
+from datetime import datetime, timezone
 
 import io
 import logging
@@ -96,7 +97,13 @@ class PdfWriter(BaseV3Writer):
         page_css_text = page_css_template.format(**page_info)
         page_css = weasyprint.CSS(string=page_css_text)
 
-        pdf = writer.write_pdf(None, stylesheets=[ css, page_css ], presentational_hints=True, pdf_variant='pdf/a-3u', pdf_identifier='xml2rfc')
+        # set additional metadata
+        rendering = writer.render()
+        now = datetime.now(timezone.utc).isoformat()
+        rendering.metadata.created = now
+        rendering.metadata.modified = now
+
+        pdf = rendering.write_pdf(None, stylesheets=[ css, page_css ], presentational_hints=True, pdf_variant='pdf/a-3u', pdf_identifier='xml2rfc', custom_metadata=True)
 
         return pdf
 
