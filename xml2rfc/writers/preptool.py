@@ -24,6 +24,7 @@ from urllib.parse import urlsplit, urlunsplit, urljoin, urlparse
 from urllib.request import urlopen
 
 from lxml import etree
+from natsort import natsorted
 
 
 from xml2rfc import strings, log
@@ -1256,7 +1257,7 @@ class PrepToolWriter(BaseV3Writer):
         sort_refs = (self.root.get('sortRefs', 'true') == 'true') and (self.root.get('symRefs', 'true') == 'true')
         if sort_refs:
             children = e.xpath('./reference') + e.xpath('./referencegroup')
-            children.sort(key=lambda x: self.refname_mapping[x.get('anchor')].upper() )
+            children = natsorted(children, key=lambda x: self.refname_mapping[x.get('anchor')].upper())
             for c in children:
                 e.remove(c)
             if len(e):
