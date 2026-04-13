@@ -27,6 +27,22 @@
     <section numbered="true" toc="default">
       <name>Section 31</name>
       <t>redacted <xref target="RFC99998"/></t>
+      <t>More references:
+        <xref target="RFC666"/>
+        <xref target="RFC4321"/>
+        <xref target="RFC1"/>
+        <xref target="RFC99"/>
+        <xref target="BCP101"/>
+        <xref target="BCP3"/>
+        <xref target="BCP10"/>
+        <xref target="STD101"/>
+        <xref target="STD30"/>
+        <xref target="STD2"/>
+        <xref target="ACME"/>
+        <xref target="FOOBAR"/>
+        <xref target="RFCed"/>
+        <xref target="ZULU"/>
+      </t>
     </section>
   </middle>
   <back>
@@ -34,7 +50,65 @@
       <name>References</name>
       <references>
         <name>Normative References</name>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.0666.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4321.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.0001.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.99998.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.0099.xml"/>
+        <referencegroup anchor="BCP101" target="https://www.rfc-editor.org/info/bcp101">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1111.xml"/>
+        </referencegroup>
+        <referencegroup anchor="BCP3" target="https://www.rfc-editor.org/info/bcp3">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1112.xml"/>
+        </referencegroup>
+        <referencegroup anchor="BCP10" target="https://www.rfc-editor.org/info/bcp10">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1113.xml"/>
+        </referencegroup>
+        <referencegroup anchor="STD101" target="https://www.rfc-editor.org/info/std101">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2222.xml"/>
+        </referencegroup>
+        <referencegroup anchor="STD30" target="https://www.rfc-editor.org/info/std30">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2223.xml"/>
+        </referencegroup>
+        <referencegroup anchor="STD2" target="https://www.rfc-editor.org/info/std2">
+          <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2224.xml"/>
+        </referencegroup>
+        <reference anchor="FOOBAR" target="https://example.org">
+          <front>
+            <title>FOOBAR</title>
+            <author>
+              <organization>FOOBAR</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+        <reference anchor="ZULU" target="https://example.org">
+          <front>
+            <title>ZULU</title>
+            <author>
+              <organization>ZULU</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+        <reference anchor="RFCed" target="https://example.org">
+          <front>
+            <title>RFCed</title>
+            <author>
+              <organization>RFCed</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+        <reference anchor="ACME" target="https://example.org">
+          <front>
+            <title>ACME</title>
+            <author>
+              <organization>ACME</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
       </references>
     </references>
   </back>

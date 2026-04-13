@@ -22,6 +22,22 @@
     <section numbered="true" toc="default">
       <name>Section 31</name>
       <t>redacted <xref target="RFC99998"/></t>
+      <t>More references:
+        <xref target="RFC666"/>
+        <xref target="RFC4321"/>
+        <xref target="RFC1"/>
+        <xref target="RFC99"/>
+        <xref target="BCP101"/>
+        <xref target="BCP3"/>
+        <xref target="BCP10"/>
+        <xref target="STD101"/>
+        <xref target="STD30"/>
+        <xref target="STD2"/>
+        <xref target="ACME"/>
+        <xref target="FOOBAR"/>
+        <xref target="RFCed"/>
+        <xref target="ZULU"/>
+      </t>
     </section>
   </middle>
   <back>
@@ -29,6 +45,42 @@
       <name>References</name>
       <references>
         <name>Normative References</name>
+        <reference anchor="RFC666" target="https://www.rfc-editor.org/info/rfc666">
+          <front>
+            <title>General Order 24</title>
+            <author fullname="J. Doe" initials="J." surname="Doe"/>
+            <date month="October" year="2024"/>
+            <abstract>
+              <t>Fake reference</t>
+            </abstract>
+          </front>
+          <seriesInfo name="RFC" value="666"/>
+          <seriesInfo name="DOI" value="10.17487/RFC666"/>
+        </reference>
+        <reference anchor="RFC4321" target="https://www.rfc-editor.org/info/rfc4321">
+          <front>
+            <title>General Order 7</title>
+            <author fullname="J. Doe" initials="J." surname="Doe"/>
+            <date month="October" year="2024"/>
+            <abstract>
+              <t>Fake reference</t>
+            </abstract>
+          </front>
+          <seriesInfo name="RFC" value="4321"/>
+          <seriesInfo name="DOI" value="10.17487/RFC4321"/>
+        </reference>
+        <reference anchor="RFC1" target="https://www.rfc-editor.org/info/rfc1">
+          <front>
+            <title>General Order 0</title>
+            <author fullname="J. Doe" initials="J." surname="Doe"/>
+            <date month="October" year="2024"/>
+            <abstract>
+              <t>Fake reference</t>
+            </abstract>
+          </front>
+          <seriesInfo name="RFC" value="1"/>
+          <seriesInfo name="DOI" value="10.17487/RFC1"/>
+        </reference>
         <reference anchor="RFC99998" target="https://www.rfc-editor.org/info/rfc99998">
           <front>
             <title>Prime Directive</title>
@@ -40,6 +92,144 @@
           </front>
           <seriesInfo name="RFC" value="99998"/>
           <seriesInfo name="DOI" value="10.17487/RFC99998"/>
+        </reference>
+        <reference anchor="RFC99" target="https://www.rfc-editor.org/info/rfc99">
+          <front>
+            <title>General Order 99</title>
+            <author fullname="J. Doe" initials="J." surname="Doe"/>
+            <date month="October" year="2024"/>
+            <abstract>
+              <t>Fake reference</t>
+            </abstract>
+          </front>
+          <seriesInfo name="RFC" value="99"/>
+          <seriesInfo name="DOI" value="10.17487/RFC99"/>
+        </reference>
+        <referencegroup anchor="BCP101" target="https://www.rfc-editor.org/info/bcp101">
+          <reference anchor="RFC1111" target="https://www.rfc-editor.org/info/rfc1111">
+            <front>
+              <title>Fake Title</title>
+              <author fullname="J. Doe" initials="J." surname="Doe"/>
+              <date month="February" year="2020"/>
+              <abstract>
+                <t>Fake reference</t>
+              </abstract>
+            </front>
+            <seriesInfo name="BCP" value="101"/>
+            <seriesInfo name="RFC" value="1111"/>
+            <seriesInfo name="DOI" value="10.17487/RFC1111"/>
+          </reference>
+        </referencegroup>
+        <referencegroup anchor="BCP3" target="https://www.rfc-editor.org/info/bcp3">
+          <reference anchor="RFC1112" target="https://www.rfc-editor.org/info/rfc1112">
+            <front>
+              <title>Fake Title</title>
+              <author fullname="J. Doe" initials="J." surname="Doe"/>
+              <date month="February" year="2020"/>
+              <abstract>
+                <t>Fake reference</t>
+              </abstract>
+            </front>
+            <seriesInfo name="BCP" value="3"/>
+            <seriesInfo name="RFC" value="1112"/>
+            <seriesInfo name="DOI" value="10.17487/RFC1112"/>
+          </reference>
+        </referencegroup>
+        <referencegroup anchor="BCP10" target="https://www.rfc-editor.org/info/bcp10">
+          <reference anchor="RFC1113" target="https://www.rfc-editor.org/info/rfc1113">
+            <front>
+              <title>Fake Title</title>
+              <author fullname="J. Doe" initials="J." surname="Doe"/>
+              <date month="February" year="2020"/>
+              <abstract>
+                <t>Fake reference</t>
+              </abstract>
+            </front>
+            <seriesInfo name="BCP" value="10"/>
+            <seriesInfo name="RFC" value="1113"/>
+            <seriesInfo name="DOI" value="10.17487/RFC1113"/>
+          </reference>
+        </referencegroup>
+        <referencegroup anchor="STD101" target="https://www.rfc-editor.org/info/std101">
+          <reference anchor="RFC2222" target="https://www.rfc-editor.org/info/rfc2222">
+            <front>
+              <title>Fake Title</title>
+              <author fullname="J. Doe" initials="J." surname="Doe"/>
+              <date month="February" year="2020"/>
+              <abstract>
+                <t>Fake reference</t>
+              </abstract>
+            </front>
+            <seriesInfo name="STD" value="101"/>
+            <seriesInfo name="RFC" value="2222"/>
+            <seriesInfo name="DOI" value="10.17487/RFC2222"/>
+          </reference>
+        </referencegroup>
+        <referencegroup anchor="STD30" target="https://www.rfc-editor.org/info/std30">
+          <reference anchor="RFC2223" target="https://www.rfc-editor.org/info/rfc2223">
+            <front>
+              <title>Fake Title</title>
+              <author fullname="J. Doe" initials="J." surname="Doe"/>
+              <date month="February" year="2020"/>
+              <abstract>
+                <t>Fake reference</t>
+              </abstract>
+            </front>
+            <seriesInfo name="STD" value="30"/>
+            <seriesInfo name="RFC" value="2223"/>
+            <seriesInfo name="DOI" value="10.17487/RFC2223"/>
+          </reference>
+        </referencegroup>
+        <referencegroup anchor="STD2" target="https://www.rfc-editor.org/info/std2">
+          <reference anchor="RFC2224" target="https://www.rfc-editor.org/info/rfc2224">
+            <front>
+              <title>Fake Title</title>
+              <author fullname="J. Doe" initials="J." surname="Doe"/>
+              <date month="February" year="2020"/>
+              <abstract>
+                <t>Fake reference</t>
+              </abstract>
+            </front>
+            <seriesInfo name="STD" value="2"/>
+            <seriesInfo name="RFC" value="2224"/>
+            <seriesInfo name="DOI" value="10.17487/RFC2224"/>
+          </reference>
+        </referencegroup>
+        <reference anchor="FOOBAR" target="https://example.org">
+          <front>
+            <title>FOOBAR</title>
+            <author>
+              <organization>FOOBAR</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+        <reference anchor="ZULU" target="https://example.org">
+          <front>
+            <title>ZULU</title>
+            <author>
+              <organization>ZULU</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+        <reference anchor="RFCed" target="https://example.org">
+          <front>
+            <title>RFCed</title>
+            <author>
+              <organization>RFCed</organization>
+            </author>
+            <date year="2019"/>
+          </front>
+        </reference>
+        <reference anchor="ACME" target="https://example.org">
+          <front>
+            <title>ACME</title>
+            <author>
+              <organization>ACME</organization>
+            </author>
+            <date year="2019"/>
+          </front>
         </reference>
       </references>
     </references>
