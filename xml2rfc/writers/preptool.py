@@ -208,11 +208,21 @@ class PrepToolWriter(BaseV3Writer):
 
     def refsort(self, element):
         item = self.refname_mapping[element.get('anchor')].upper()
-        match = re.match(r"^RFC(\d+)$", item, re.IGNORECASE)
-        if match:
-            return (1, int(match.group(1)), "")
-        elif item > "RFC":
+        match_bcp = re.match(r"^BCP(\d+)$", item, re.IGNORECASE)
+        match_rfc = re.match(r"^RFC(\d+)$", item, re.IGNORECASE)
+        match_std = re.match(r"^STD(\d+)$", item, re.IGNORECASE)
+        if match_bcp:
+            return (1, int(match_bcp.group(1)), "")
+        elif item > "BCP" and item < "RFC":
             return (2, item, "")
+        elif match_rfc:
+            return (3, int(match_rfc.group(1)), "")
+        elif item > "RFC" and item < "STD":
+            return (4, item, "")
+        elif match_std:
+            return (5, int(match_std.group(1)), "")
+        elif item > "STD":
+            return (6, item, "")
         return (0, item, "")
 
     def prep(self):
