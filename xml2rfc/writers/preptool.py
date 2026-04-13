@@ -206,6 +206,15 @@ class PrepToolWriter(BaseV3Writer):
             lines[i] = line
         e.text = '\n'.join(lines)
 
+    def refsort(self, element):
+        item = self.refname_mapping[element.get('anchor')].upper()
+        match = re.match(r"^RFC(\d+)$", item, re.IGNORECASE)
+        if match:
+            return (1, int(match.group(1)), "")
+        elif item > "RFC":
+            return (2, item, "")
+        return (0, item, "")
+
     def prep(self):
         self._seen_slugs = set()  # Reset cache before prepping
         self.xinclude()
@@ -1256,7 +1265,7 @@ class PrepToolWriter(BaseV3Writer):
         sort_refs = (self.root.get('sortRefs', 'true') == 'true') and (self.root.get('symRefs', 'true') == 'true')
         if sort_refs:
             children = e.xpath('./reference') + e.xpath('./referencegroup')
-            children.sort(key=lambda x: self.refname_mapping[x.get('anchor')].upper() )
+            children.sort(key=self.refsort)
             for c in children:
                 e.remove(c)
             if len(e):
